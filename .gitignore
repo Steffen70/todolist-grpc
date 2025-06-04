@@ -1,6 +1,10 @@
+# IDE files
 .vs/
 .github/
+.idea/
+launchSettings.json
+*.user
+
+# Build output
 obj/
 bin/
-*.user
-launchSettings.json
