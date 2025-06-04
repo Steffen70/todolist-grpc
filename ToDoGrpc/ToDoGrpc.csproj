@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\Protos\greet.proto" GrpcServices="Server" />
-    <Protobuf Include="..\Protos\todo.proto" GrpcServices="Server" />
+    <Protobuf Include="..\protos\greet.proto" GrpcServices="Server"/>
+    <Protobuf Include="..\protos\todo.proto" GrpcServices="Server"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Grpc.AspNetCore" Version="2.64.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.64.0"/>
     <PackageReference Include="grpc.tools" Version="2.72.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -21,8 +21,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="microsoft.entityFrameworkCore.sqlite" Version="9.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.5" />
+    <PackageReference Include="microsoft.entityFrameworkCore.sqlite" Version="9.0.5"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.5"/>
   </ItemGroup>
 
   <ItemGroup>

@@ -8,12 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Protobuf Include="..\Protos\greet.proto" GrpcServices="Client" />
-        <Protobuf Include="..\Protos\todo.proto" GrpcServices="Client" />
+        <Protobuf Include="..\protos\greet.proto" GrpcServices="Client"/>
+        <Protobuf Include="..\protos\todo.proto" GrpcServices="Client"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Grpc.Net.Client" Version="2.64.0" />
+        <PackageReference Include="Grpc.Net.Client" Version="2.64.0"/>
         <PackageReference Include="grpc.tools" Version="2.72.0">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ToDoGrpc\ToDoGrpc.csproj" />
+        <ProjectReference Include="..\ToDoGrpc\ToDoGrpc.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

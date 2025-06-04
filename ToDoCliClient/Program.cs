@@ -15,7 +15,7 @@ public static class Program
 
         // Create handler that trusts your custom cert
         var handler = new HttpClientHandler();
-        handler.ServerCertificateCustomValidationCallback = (_, cert, chain, __) =>
+        handler.ServerCertificateCustomValidationCallback = (_, cert, chain, _) =>
         {
             // Manually trust your own root CA
             chain!.ChainPolicy.ExtraStore.Add(rootCa);
