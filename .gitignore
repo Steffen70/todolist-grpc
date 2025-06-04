@@ -1,0 +1,6 @@
+.vs/
+.github/
+obj/
+bin/
+*.user
+launchSettings.json
