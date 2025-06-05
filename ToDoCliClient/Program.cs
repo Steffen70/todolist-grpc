@@ -59,6 +59,7 @@ switch(Choice)
         }
     case 2:
         {
+            //Add Item 2 
             Console.WriteLine("Enter Id of List:");
             Int32 list_id = int.Parse(Console.ReadLine());
             Console.WriteLine("Enter ItemName:");
@@ -81,15 +82,40 @@ switch(Choice)
             }
             
         }
+    case 3:
+        {
+            Console.WriteLine("Enter Id of List:");
+            Int32 list_id = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter Id of Item:");
+            Int32 item_id = int.Parse(Console.ReadLine());
+            var result = todoClient.ReadItem(new() { Id = item_id , ToDoListId = list_id});
+            if (result == null)
+            {
+                throw new RpcException(new Status(StatusCode.InvalidArgument, "can't find this one"));
+
+            }
+            else
+            {
+                Console.WriteLine(new string('-', 65));
+                Console.WriteLine("{0,-12} | {1,-12} | {2,-8} | {3,-15} | {4,-8}",
+                  "ListId", "ListName", "ItemId", "ItemName", "IsDone");
+                Console.WriteLine(new string('-', 65));
+                Console.WriteLine("{0,-12} | {1,-12} | {2,-8} | {3,-15} | {4,-8}",
+                                  result.ToDoListId, result.ListName, result.Id, result.ItemName, result.IsDone);
+                Console.WriteLine(new string('-', 65));
+                break;
+            }
+            break;
+        }
     default: 
             {
 
             break;
             }
 }
-//Add Item 2 
 
-//Read Item 3 
+
+ 
 
 // Delete Item
 
