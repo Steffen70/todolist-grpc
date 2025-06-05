@@ -13,8 +13,8 @@ namespace ToDoGrpc.Data
         
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            // options.UseSqlServer(ConnectionS.SqlConStr);
-            options.UseSqlite($"Data Source={Path.Combine(AppContext.BaseDirectory, "development.db")}");
+             options.UseSqlServer(ConnectionS.SqlConStr);
+            //options.UseSqlite($"Data Source={Path.Combine(AppContext.BaseDirectory, "development.db")}");
         }
         public DbSet<ToDoItem> ToDoItems => Set<ToDoItem>();
         public DbSet<ToDoList> ToDoLists => Set<ToDoList>();
