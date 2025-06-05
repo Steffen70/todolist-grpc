@@ -1,23 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
-using ToDoGrpc.models;
+using ToDoGrpc.Models;
 
-namespace ToDoGrpc.Data
+namespace ToDoGrpc.Data;
+
+public sealed class AppDbContext : DbContext
 {
-    public sealed class AppDbContext : DbContext
+    public AppDbContext()
     {
-        public AppDbContext()
-        {
-            Database.EnsureCreated();
-        }
-        
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            // options.UseSqlServer(ConnectionS.SqlConStr);
-            options.UseSqlite($"Data Source={Path.Combine(AppContext.BaseDirectory, "development.db")}");
-        }
-        public DbSet<ToDoItem> ToDoItems => Set<ToDoItem>();
-        public DbSet<ToDoList> ToDoLists => Set<ToDoList>();
+        Database.EnsureCreated();
+    }
+
+    public DbSet<ToDoItem> ToDoItems => Set<ToDoItem>();
+    public DbSet<ToDoList> ToDoLists => Set<ToDoList>();
+
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+    {
+        // options.UseSqlServer(ConnectionS.SqlConStr);
+        options.UseSqlite($"Data Source={Path.Combine(AppContext.BaseDirectory, "development.db")}");
     }
 }
-    

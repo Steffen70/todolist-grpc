@@ -16,7 +16,7 @@ namespace ToDoGrpc.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.5");
 
-            modelBuilder.Entity("ToDoGrpc.models.ToDoItem", b =>
+            modelBuilder.Entity("ToDoGrpc.Models.ToDoItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -26,6 +26,7 @@ namespace ToDoGrpc.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ItemName")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ToDoListId")
@@ -38,13 +39,14 @@ namespace ToDoGrpc.Migrations
                     b.ToTable("ToDoItems");
                 });
 
-            modelBuilder.Entity("ToDoGrpc.models.ToDoList", b =>
+            modelBuilder.Entity("ToDoGrpc.Models.ToDoList", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ListName")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -52,9 +54,9 @@ namespace ToDoGrpc.Migrations
                     b.ToTable("ToDoLists");
                 });
 
-            modelBuilder.Entity("ToDoGrpc.models.ToDoItem", b =>
+            modelBuilder.Entity("ToDoGrpc.Models.ToDoItem", b =>
                 {
-                    b.HasOne("ToDoGrpc.models.ToDoList", "ToDoList")
+                    b.HasOne("ToDoGrpc.Models.ToDoList", "ToDoList")
                         .WithMany("Items")
                         .HasForeignKey("ToDoListId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -63,7 +65,7 @@ namespace ToDoGrpc.Migrations
                     b.Navigation("ToDoList");
                 });
 
-            modelBuilder.Entity("ToDoGrpc.models.ToDoList", b =>
+            modelBuilder.Entity("ToDoGrpc.Models.ToDoList", b =>
                 {
                     b.Navigation("Items");
                 });
