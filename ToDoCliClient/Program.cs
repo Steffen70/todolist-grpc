@@ -36,7 +36,7 @@ var todoClient = new todoit.todoitClient(channel);
 Console.WriteLine("Hello In ToDoList-App" +
     "\n1->To create a new list" +
     "\n2->To Add new Item to a List" +
-    "\n3-To Update An Item" +
+    "\n3-To ReadItem" +
     "\n4-To Delete Item");
 int Choice = int.Parse(Console.ReadLine());
 
