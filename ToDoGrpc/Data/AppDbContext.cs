@@ -7,7 +7,22 @@ public sealed class AppDbContext : DbContext
 {
     public AppDbContext()
     {
+<<<<<<< HEAD
         Database.EnsureCreated();
+=======
+        public AppDbContext()
+        {
+            Database.EnsureCreated();
+        }
+        
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+             options.UseSqlServer(ConnectionS.SqlConStr);
+            //options.UseSqlite($"Data Source={Path.Combine(AppContext.BaseDirectory, "development.db")}");
+        }
+        public DbSet<ToDoItem> ToDoItems => Set<ToDoItem>();
+        public DbSet<ToDoList> ToDoLists => Set<ToDoList>();
+>>>>>>> EditClient
     }
 
     public DbSet<ToDoItem> ToDoItems => Set<ToDoItem>();

@@ -1,0 +1,32 @@
+[33mcommit b13e9fb521609dd94f0885ad9c7bdfa456d9289a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mEditClient[m[33m, [m[1;31morigin/EditClient[m[33m)[m
+Author: NaderCc <kanmagdy@gmail.com>
+Date:   Thu Jun 5 18:16:19 2025 +0300
+
+    Edit ToDoCliClient and put CreateList&Add Item
+
+[33mcommit 5d1bec50fddfd6e4c82c1b55603e3fca655e5045[m
+Author: NaderCc <kanmagdy@gmail.com>
+Date:   Thu Jun 5 18:10:35 2025 +0300
+
+    Edit ToDoCliClient and put CreateList&Add Item
+
+[33mcommit beb9de40b5e8f5901c43a0cf9946fa136d33c94a[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Merge: a315d61 23f1fbe
+Author: Nader Magdy <kanmagdy@gmail.com>
+Date:   Thu Jun 5 01:41:51 2025 +0300
+
+    Merge pull request #1 from Steffen70/main
+    
+    CLI Client Initialization
+
+[33mcommit 23f1fbea52f8fc3b4fbfae9c1fa9016b36337206[m
+Author: Steffen70 <steffen@seventy.mx>
+Date:   Thu Jun 5 00:31:59 2025 +0200
+
+    Created new project ToDoCliClient, a new solution and restructured the project structure; added development root and localhost certificates.
+
+[33mcommit a315d61769130724851a7ffbead6d90ccdfddc99[m[33m ([m[1;31morigin/feature/console-application[m[33m)[m
+Author: NaderCc <kanmagdy@gmail.com>
+Date:   Thu Jun 5 00:03:20 2025 +0300
+
+    Create a new clean repositry.
