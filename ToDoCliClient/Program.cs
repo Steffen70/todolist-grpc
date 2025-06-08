@@ -106,21 +106,3 @@ switch(Choice)
 
  
 
-// Delete Item
-
-
-
-
-//MarkIsDone
-
-//todoClient.CreateList(new() { ListName = "List from CLI" });
-
-
-//var result = todoClient.ReadLists(new());
-
-//foreach (var todoList in result.Lists)
-//{
-//    Console.WriteLine($"Found list: {todoList.ListName}");
-//}
-
-Console.ReadLine();
