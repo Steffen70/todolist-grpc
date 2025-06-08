@@ -41,67 +41,103 @@ public static class Program
         var todoClient = new todoit.todoitClient(channel);
 
         // Optional initial call (لو مش محتاجه ممكن تشيلها)
-        todoClient.CreateList(new() { ListName = "List from CLI" });
-
-        Console.WriteLine("Hello In ToDoList-App" +
-            "\n1->To create a new list" +
-            "\n2->To Add new Item to a List" +
-            "\n3-To ReadItem" +
-            "\n4-To ReadListsWithItems" +
-            "\n5-update an item");
-
-        int Choice = int.Parse(Console.ReadLine());
-
-        switch (Choice)
+        //todoClient.CreateList(new() { ListName = "List from CLI" });
+        while (true)
         {
-            case 1:
-                {
-                    Console.WriteLine("You have to Enter List_name:");
-                    string list_name = Console.ReadLine();
-                    ToDoServiceClient.CreateList(list_name, todoClient);
-                    break;
-                }
-            case 2:
-                {
-                    Console.WriteLine("Enter Id of List:");
-                    Int32 list_id = int.Parse(Console.ReadLine());
-                    Console.WriteLine("Enter ItemName:");
-                    string item_name = Console.ReadLine();
-                    ToDoServiceClient.AddItem(list_id, item_name, todoClient);
-                    break;
-                }
-            case 3:
-                {
-                    Console.WriteLine("Enter Id of List:");
-                    Int32 list_id = int.Parse(Console.ReadLine());
-                    Console.WriteLine("Enter Id of Item:");
-                    Int32 item_id = int.Parse(Console.ReadLine());
-                    ToDoServiceClient.ReadItem(list_id, item_id, todoClient);
-                    break;
-                }
-            case 4:
-                {
-                    ToDoServiceClient.ReadLists(todoClient);
-                    break;
-                }
-            case 5:
-                {
-                    Console.WriteLine("Enter Id of List:");
-                    Int32 list_id = int.Parse(Console.ReadLine());
-                    Console.WriteLine("Enter Id of item:");
-                    Int32 item_id = int.Parse(Console.ReadLine());
-                    Console.WriteLine("Enter ItemName:");
-                    string item_name = Console.ReadLine();
-                    Console.WriteLine("Enter the Status of the item (Done = true , Still working = false)");
-                    bool item_is_done = bool.TryParse(Console.ReadLine(), out bool result) ? result : false;
+            Console.WriteLine("Hello In ToDoList-App" +
+                "\n1->To create a new list" +
+                "\n2->To Add new Item to a List" +
+                "\n3-To ReadItem" +
+                "\n4-To ReadListsWithItems" +
+                "\n5-update an item" +
+                "\n6-Delete an Item" +
+                "\n7-Mark Item as done");
 
-                    ToDoServiceClient.UpdateItems(item_id, list_id, item_name, item_is_done, todoClient);
-                    break;
-                }
-            default:
-                {
-                    break;
-                }
+            int Choice = int.Parse(Console.ReadLine());
+
+            switch (Choice)
+            {
+                case 1:
+                    {
+                        Console.WriteLine("You have to Enter List_name:");
+                        string list_name = Console.ReadLine();
+                        ToDoServiceClient.CreateList(list_name, todoClient);
+                        break;
+                    }
+                case 2:
+                    {
+                        Console.WriteLine("Enter Id of List:");
+                        Int32 list_id = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter ItemName:");
+                        string item_name = Console.ReadLine();
+                        ToDoServiceClient.AddItem(list_id, item_name, todoClient);
+                        break;
+                    }
+                case 3:
+                    {
+                        Console.WriteLine("Enter Id of List:");
+                        Int32 list_id = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter Id of Item:");
+                        Int32 item_id = int.Parse(Console.ReadLine());
+                        ToDoServiceClient.ReadItem(list_id, item_id, todoClient);
+                        break;
+                    }
+                case 4:
+                    {
+                        ToDoServiceClient.ReadLists(todoClient);
+                        break;
+                    }
+                case 5:
+                    {
+                        Console.WriteLine("Enter Id of List:");
+                        Int32 list_id = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter Id of item:");
+                        Int32 item_id = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter ItemName:");
+                        string item_name = Console.ReadLine();
+                        Console.WriteLine("Enter the Status of the item (Done = true , Still working = false)");
+                        bool item_is_done = bool.TryParse(Console.ReadLine(), out bool result) ? result : false;
+
+                        ToDoServiceClient.UpdateItems(item_id, list_id, item_name, item_is_done, todoClient);
+                        break;
+                    }
+                case 6:
+                    {
+                        ToDoServiceClient.RemindMe(todoClient);
+                        Console.WriteLine("Enter Id of List:");
+                        Int32 list_id = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter Id of item:");
+                        Int32 item_id = int.Parse(Console.ReadLine());
+                        ToDoServiceClient.DeleteItems(list_id, item_id, todoClient);
+                        break;
+
+                    }
+                case 7:
+                    {
+                        ToDoServiceClient.RemindMe(todoClient);
+                        Console.WriteLine("Enter Id of List:");
+                        Int32 list_id = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter Id of item:");
+                        Int32 item_id = int.Parse(Console.ReadLine());
+                        ToDoServiceClient.MarkAsDone(list_id, item_id, todoClient);
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
+            Console.WriteLine("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+            Console.WriteLine("Do you want" +
+                "\n1-To do another service" +
+                "\n2-To Exit App");
+            int.TryParse(Console.ReadLine(), out int app_result);
+            if (app_result == 1)
+            { continue; }
+            else
+            {
+                break;
+            }
         }
 
         Console.ReadLine();

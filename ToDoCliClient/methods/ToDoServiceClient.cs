@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Grpc.Core;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using ToDoGrpc;
+using static ToDoGrpc.todoit;
 
 namespace ToDoCliClient.methods
 {
@@ -101,6 +102,46 @@ namespace ToDoCliClient.methods
                 Console.WriteLine("updating of item is been faild");
             }
         }
-        
+        public static void DeleteItems(int list_id, int item_id, todoit.todoitClient todoClient)
+        {
+
+
+            ToDoServiceClient.ReadLists(todoClient);
+            todoClient.DeleteItem(new()
+            {
+                ToDoListId = list_id,
+                Id = item_id
+            });
+
+            Console.WriteLine($"Item has || ListId:{list_id} || ItemId:{item_id} || is deleted!!");
+        }
+        public static void RemindMe(todoit.todoitClient todoClient)
+        {
+            Console.WriteLine("Do u want to see the lists to get the id of item and list" +
+                        "\n1-if Yes\n2-No u have the ids");
+            int.TryParse(Console.ReadLine(), out int ch);
+            if (ch == 1)
+            {
+                ToDoServiceClient.ReadLists(todoClient);
+                Console.WriteLine("Press Enter To Continue:");
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("Press Enter To Continue:");
+                Console.ReadLine();
+            }
+        }
+        public static void MarkAsDone(int list_id, int item_id,todoit.todoitClient todoClient)
+        {
+            todoClient.MarkAsDone(new()
+            {
+                ToDoListId = list_id,
+                Id = item_id
+            });
+            Console.WriteLine($"---->>Item has || ListId:{list_id} || ItemId:{item_id} || is Marked as Done!!<<----");
+        }
+
+
     }
 }
