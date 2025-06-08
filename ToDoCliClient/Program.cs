@@ -1,7 +1,11 @@
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Security.Cryptography.X509Certificates;
 using Grpc.Core;
 using Grpc.Net.Client;
 using ToDoGrpc;
+using ToDoCliClient.methods;
+using Azure;
+using Google.Protobuf.Collections;
+
 
 var baseAddress = new Uri("https://localhost:8443");
 
@@ -37,8 +41,10 @@ Console.WriteLine("Hello In ToDoList-App" +
     "\n1->To create a new list" +
     "\n2->To Add new Item to a List" +
     "\n3-To ReadItem" +
-    "\n4-To Delete Item");
+    "\n4-To ReadListsWithItems"+
+    "\n5-update an item");
 int Choice = int.Parse(Console.ReadLine());
+
 
 switch(Choice)
 {
@@ -47,14 +53,7 @@ switch(Choice)
         {
             Console.WriteLine("You have to Enter List_name:");
             string list_name = Console.ReadLine();
-            todoClient.CreateList(new() { ListName = list_name });
-            var result = todoClient.ReadLists(new()).Lists.FirstOrDefault(x=>x.ListName ==list_name);
-
-            Console.WriteLine(new string('-', 20));
-            Console.WriteLine("|{0,-10} | {1,-5} |", "ListId", "ListName");
-            Console.WriteLine(new string('-', 20));
-            Console.WriteLine("|{0,-10} | {1,-5} |", result.Id , result.ListName);
-            Console.WriteLine(new string('-', 20));
+            ToDoServiceClient.CreateList(list_name,todoClient);
             break;
         }
     case 2:
@@ -64,22 +63,8 @@ switch(Choice)
             Int32 list_id = int.Parse(Console.ReadLine());
             Console.WriteLine("Enter ItemName:");
             string item_name = Console.ReadLine();
-            var result = todoClient.ReadLists(new());
-            if (result.Lists.FirstOrDefault(x => x.Id == list_id) == null)
-            {
-                throw new RpcException(new Status(StatusCode.InvalidArgument, "can't find this one"));
-                
-            }
-            else
-            {
-                todoClient.AddItemToList(new()
-                {
-                    ToDoListId = list_id,
-                    ItemName = item_name,
-                });
-                Console.WriteLine("--->>>>>Item is added!<<<<<---");
-                break;
-            }
+            ToDoServiceClient.AddItem(list_id, item_name, todoClient);
+            break;
             
         }
     case 3:
@@ -88,23 +73,27 @@ switch(Choice)
             Int32 list_id = int.Parse(Console.ReadLine());
             Console.WriteLine("Enter Id of Item:");
             Int32 item_id = int.Parse(Console.ReadLine());
-            var result = todoClient.ReadItem(new() { Id = item_id , ToDoListId = list_id});
-            if (result == null)
-            {
-                throw new RpcException(new Status(StatusCode.InvalidArgument, "can't find this one"));
+            ToDoServiceClient.ReadItem(list_id, item_id,todoClient);
+            break;
+        }
+    case 4:
+        {
+            ToDoServiceClient.ReadLists(todoClient);
+            break;
+        }
+    //Update Item 
+    case 5:
+        {
+            Console.WriteLine("Enter Id of List:");
+            Int32 list_id = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter Id of item:");
+            Int32 item_id = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter ItemName:");
+            string item_name = Console.ReadLine();
+            Console.WriteLine("Enter the Status of the item (Done = true , Still working = false)");
+            bool item_is_done = bool.TryParse(Console.ReadLine(), out bool result) ? result : false;
 
-            }
-            else
-            {
-                Console.WriteLine(new string('-', 65));
-                Console.WriteLine("{0,-12} | {1,-12} | {2,-8} | {3,-15} | {4,-8}",
-                  "ListId", "ListName", "ItemId", "ItemName", "IsDone");
-                Console.WriteLine(new string('-', 65));
-                Console.WriteLine("{0,-12} | {1,-12} | {2,-8} | {3,-15} | {4,-8}",
-                                  result.ToDoListId, result.ListName, result.Id, result.ItemName, result.IsDone);
-                Console.WriteLine(new string('-', 65));
-                break;
-            }
+            ToDoServiceClient.UpdateItems(item_id, list_id, item_name, item_is_done, todoClient);
             break;
         }
     default: 
@@ -119,7 +108,7 @@ switch(Choice)
 
 // Delete Item
 
-//Update Item 
+
 
 
 //MarkIsDone
