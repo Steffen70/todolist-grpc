@@ -6,7 +6,6 @@ using ToDoCliClient.methods;
 using Azure;
 using Google.Protobuf.Collections;
 
-
 namespace ToDoCliClient;
 
 public static class Program
@@ -31,7 +30,6 @@ public static class Program
             return isValid;
         };
 
-
         // Create gRPC channel using custom handler
         var httpClient = new HttpClient(handler);
         var channel = GrpcChannel.ForAddress(baseAddress, new()
@@ -42,102 +40,70 @@ public static class Program
         // Use your client
         var todoClient = new todoit.todoitClient(channel);
 
+        // Optional initial call (لو مش محتاجه ممكن تشيلها)
         todoClient.CreateList(new() { ListName = "List from CLI" });
 
-        
-         Console.WriteLine("Hello In ToDoList-App" +
-        "\n1->To create a new list" +
-        "\n2->To Add new Item to a List" +
-        "\n3-To ReadItem" +
-        "\n4-To ReadListsWithItems" +
-        "\n5-update an item");
-            int Choice = int.Parse(Console.ReadLine());
+        Console.WriteLine("Hello In ToDoList-App" +
+            "\n1->To create a new list" +
+            "\n2->To Add new Item to a List" +
+            "\n3-To ReadItem" +
+            "\n4-To ReadListsWithItems" +
+            "\n5-update an item");
 
+        int Choice = int.Parse(Console.ReadLine());
 
-            switch (Choice)
-            {
-                //Create List 1 
-                case 1:
-                    {
-                        Console.WriteLine("You have to Enter List_name:");
-                        string list_name = Console.ReadLine();
-                        ToDoServiceClient.CreateList(list_name, todoClient);
-                        break;
-                    }
-                case 2:
-                    {
-                        //Add Item 2 
-                        Console.WriteLine("Enter Id of List:");
-                        Int32 list_id = int.Parse(Console.ReadLine());
-                        Console.WriteLine("Enter ItemName:");
-                        string item_name = Console.ReadLine();
-                        ToDoServiceClient.AddItem(list_id, item_name, todoClient);
-                        break;
+        switch (Choice)
+        {
+            case 1:
+                {
+                    Console.WriteLine("You have to Enter List_name:");
+                    string list_name = Console.ReadLine();
+                    ToDoServiceClient.CreateList(list_name, todoClient);
+                    break;
+                }
+            case 2:
+                {
+                    Console.WriteLine("Enter Id of List:");
+                    Int32 list_id = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter ItemName:");
+                    string item_name = Console.ReadLine();
+                    ToDoServiceClient.AddItem(list_id, item_name, todoClient);
+                    break;
+                }
+            case 3:
+                {
+                    Console.WriteLine("Enter Id of List:");
+                    Int32 list_id = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter Id of Item:");
+                    Int32 item_id = int.Parse(Console.ReadLine());
+                    ToDoServiceClient.ReadItem(list_id, item_id, todoClient);
+                    break;
+                }
+            case 4:
+                {
+                    ToDoServiceClient.ReadLists(todoClient);
+                    break;
+                }
+            case 5:
+                {
+                    Console.WriteLine("Enter Id of List:");
+                    Int32 list_id = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter Id of item:");
+                    Int32 item_id = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter ItemName:");
+                    string item_name = Console.ReadLine();
+                    Console.WriteLine("Enter the Status of the item (Done = true , Still working = false)");
+                    bool item_is_done = bool.TryParse(Console.ReadLine(), out bool result) ? result : false;
 
-                    }
-                case 3:
-                    {
-                        Console.WriteLine("Enter Id of List:");
-                        Int32 list_id = int.Parse(Console.ReadLine());
-                        Console.WriteLine("Enter Id of Item:");
-                        Int32 item_id = int.Parse(Console.ReadLine());
-                        ToDoServiceClient.ReadItem(list_id, item_id, todoClient);
-                        break;
-                    }
-                case 4:
-                    {
-                        ToDoServiceClient.ReadLists(todoClient);
-                        break;
-                    }
-                //Update Item 
-                case 5:
-                    {
-                        Console.WriteLine("Enter Id of List:");
-                        Int32 list_id = int.Parse(Console.ReadLine());
-                        Console.WriteLine("Enter Id of item:");
-                        Int32 item_id = int.Parse(Console.ReadLine());
-                        Console.WriteLine("Enter ItemName:");
-                        string item_name = Console.ReadLine();
-                        Console.WriteLine("Enter the Status of the item (Done = true , Still working = false)");
-                        bool item_is_done = bool.TryParse(Console.ReadLine(), out bool result) ? result : false;
+                    ToDoServiceClient.UpdateItems(item_id, list_id, item_name, item_is_done, todoClient);
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
 
-                        ToDoServiceClient.UpdateItems(item_id, list_id, item_name, item_is_done, todoClient);
-                        break;
-                    }
-                default:
-                    {
-
-                        break;
-                    }
-             
-            }
-
-            Console.ReadLine();
+        Console.ReadLine();
     }
 }
-
-
-
-
- 
-
-<<<<<<< HEAD
-// Delete Item
-
-
-
-
-//MarkIsDone
-
-//todoClient.CreateList(new() { ListName = "List from CLI" });
-
-
-//var result = todoClient.ReadLists(new());
-
-//foreach (var todoList in result.Lists)
-//{
-//    Console.WriteLine($"Found list: {todoList.ListName}");
-//}
-
-=======
->>>>>>> EditClient
