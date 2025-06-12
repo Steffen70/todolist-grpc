@@ -10,13 +10,31 @@ using static ToDoGrpc.todoit;
 
 namespace ToDoCliClient.methods
 {
-    public class ToDoServiceClient
+    public interface IToDoServiceClient
     {
-        // Create Method
-        public static void CreateList(string list_name, ToDoGrpc.todoit.todoitClient todoClient)
+        void CreateList(string list_name);
+        void AddItem(int list_id, string item_name);
+        void ReadItem(int list_id, int item_id);
+        void ReadLists();
+        void UpdateItem(int item_id, int list_id, string item_name, bool is_done);
+        void DeleteItem(int list_id, int item_id);
+        void MarkAsDone(int list_id, int item_id);
+        void RemindMe();
+    }
+    public class ToDoServiceClient : IToDoServiceClient
+    {
+        private readonly todoit.todoitClient _todoClient;
+
+        public ToDoServiceClient(todoit.todoitClient todoClient)
         {
-            todoClient.CreateList(new() { ListName = list_name });
-            var result = todoClient.ReadLists(new()).Lists.FirstOrDefault(x => x.ListName == list_name);
+            _todoClient = todoClient;
+        }
+        // Create Method
+        public  void CreateList(string list_name)
+        {
+            _todoClient.CreateList(new() { ListName = list_name });
+            
+            var result = _todoClient.ReadLists(new()).Lists.FirstOrDefault(x => x.ListName == list_name);
 
             Console.WriteLine(new string('-', 20));
             Console.WriteLine("|{0,-10} | {1,-5} |", "ListId", "ListName");
@@ -26,9 +44,9 @@ namespace ToDoCliClient.methods
         }
 
         // Add Item 
-        public static void AddItem(Int32 list_id,string item_name, todoit.todoitClient todoClient)
+        public  void AddItem(Int32 list_id,string item_name)
         {
-            var result = todoClient.ReadLists(new());
+            var result = _todoClient.ReadLists(new());
             if (result.Lists.FirstOrDefault(x => x.Id == list_id) == null)
             {
                 throw new RpcException(new Status(StatusCode.InvalidArgument, "can't find this one"));
@@ -36,19 +54,20 @@ namespace ToDoCliClient.methods
             }
             else
             {
-                todoClient.AddItemToList(new()
+                _todoClient.AddItemToList(new()
                 {
                     ToDoListId = list_id,
                     ItemName = item_name,
                 });
-                Console.WriteLine("--->>>>>Item is added!<<<<<---");
+                Console.WriteLine($"✅ Item \"{item_name}\" was added to list ID {list_id}.");
+
             }
         }
         //Read Method
-        public static void ReadItem(Int32 list_id, Int32 item_id, ToDoGrpc.todoit.todoitClient todoClient)
+        public void ReadItem(Int32 list_id, Int32 item_id)
         {
-            var result = todoClient.ReadItem(new() { Id = item_id, ToDoListId = list_id });
-            if (result == null)
+            var result = _todoClient.ReadItem(new() { Id = item_id, ToDoListId = list_id });
+            if (result.ItemName == null)
             {
                 throw new RpcException(new Status(StatusCode.InvalidArgument, "can't find this one"));
 
@@ -65,9 +84,9 @@ namespace ToDoCliClient.methods
 
             }
         }
-        public static void ReadLists(todoit.todoitClient todoClient)
+        public  void ReadLists()
         {
-            var result = todoClient.ReadLists(new());
+            var result = _todoClient.ReadLists(new());
             foreach (var list in result.Lists)
             {
                 if (list != null)
@@ -90,24 +109,23 @@ namespace ToDoCliClient.methods
                 }
             }
         }
-        public static  void UpdateItems(int item_id , int list_id , string item_name , bool is_done , todoit.todoitClient todoClient)
+        public   void UpdateItem(int item_id , int list_id , string item_name , bool is_done)
         {
-            var result = todoClient.UpdateItem(new() { Id = item_id , ToDoListId = list_id , ItemName = item_name , IsDone =is_done });
+            var result = _todoClient.UpdateItem(new() { Id = item_id , ToDoListId = list_id , ItemName = item_name , IsDone =is_done });
             if (result != null)
             {
                 Console.WriteLine("--->>>The Item is updated!!!<<<----");
             }
             else
             {
-                Console.WriteLine("updating of item is been faild");
+                Console.WriteLine("❌ Failed to update the item. Please check the ID and try again.");
+
             }
         }
-        public static void DeleteItems(int list_id, int item_id, todoit.todoitClient todoClient)
+        public  void DeleteItem(int list_id, int item_id)
         {
-
-
-            ToDoServiceClient.ReadLists(todoClient);
-            todoClient.DeleteItem(new()
+            this.ReadLists();
+            _todoClient.DeleteItem(new()
             {
                 ToDoListId = list_id,
                 Id = item_id
@@ -115,14 +133,14 @@ namespace ToDoCliClient.methods
 
             Console.WriteLine($"Item has || ListId:{list_id} || ItemId:{item_id} || is deleted!!");
         }
-        public static void RemindMe(todoit.todoitClient todoClient)
+        public  void RemindMe()
         {
             Console.WriteLine("Do u want to see the lists to get the id of item and list" +
                         "\n1-if Yes\n2-No u have the ids");
             int.TryParse(Console.ReadLine(), out int ch);
             if (ch == 1)
             {
-                ToDoServiceClient.ReadLists(todoClient);
+                this.ReadLists();
                 Console.WriteLine("Press Enter To Continue:");
                 Console.ReadLine();
             }
@@ -132,9 +150,9 @@ namespace ToDoCliClient.methods
                 Console.ReadLine();
             }
         }
-        public static void MarkAsDone(int list_id, int item_id,todoit.todoitClient todoClient)
+        public  void MarkAsDone(int list_id, int item_id)
         {
-            todoClient.MarkAsDone(new()
+            _todoClient.MarkAsDone(new()
             {
                 ToDoListId = list_id,
                 Id = item_id

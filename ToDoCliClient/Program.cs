@@ -54,6 +54,7 @@ public static class Program
                 "\n7-Mark Item as done");
 
             int Choice = int.Parse(Console.ReadLine());
+            IToDoServiceClient serves = new ToDoServiceClient(todoClient);
 
             switch (Choice)
             {
@@ -61,7 +62,7 @@ public static class Program
                     {
                         Console.WriteLine("You have to Enter List_name:");
                         string list_name = Console.ReadLine();
-                        ToDoServiceClient.CreateList(list_name, todoClient);
+                        serves.CreateList(list_name);
                         break;
                     }
                 case 2:
@@ -70,7 +71,7 @@ public static class Program
                         Int32 list_id = int.Parse(Console.ReadLine());
                         Console.WriteLine("Enter ItemName:");
                         string item_name = Console.ReadLine();
-                        ToDoServiceClient.AddItem(list_id, item_name, todoClient);
+                        serves.AddItem(list_id, item_name);
                         break;
                     }
                 case 3:
@@ -79,12 +80,12 @@ public static class Program
                         Int32 list_id = int.Parse(Console.ReadLine());
                         Console.WriteLine("Enter Id of Item:");
                         Int32 item_id = int.Parse(Console.ReadLine());
-                        ToDoServiceClient.ReadItem(list_id, item_id, todoClient);
+                        serves.ReadItem(list_id, item_id);
                         break;
                     }
                 case 4:
                     {
-                        ToDoServiceClient.ReadLists(todoClient);
+                        serves.ReadLists();
                         break;
                     }
                 case 5:
@@ -98,28 +99,28 @@ public static class Program
                         Console.WriteLine("Enter the Status of the item (Done = true , Still working = false)");
                         bool item_is_done = bool.TryParse(Console.ReadLine(), out bool result) ? result : false;
 
-                        ToDoServiceClient.UpdateItems(item_id, list_id, item_name, item_is_done, todoClient);
+                        serves.UpdateItem(item_id, list_id, item_name, item_is_done);
                         break;
                     }
                 case 6:
                     {
-                        ToDoServiceClient.RemindMe(todoClient);
+                        serves.RemindMe();
                         Console.WriteLine("Enter Id of List:");
                         Int32 list_id = int.Parse(Console.ReadLine());
                         Console.WriteLine("Enter Id of item:");
                         Int32 item_id = int.Parse(Console.ReadLine());
-                        ToDoServiceClient.DeleteItems(list_id, item_id, todoClient);
+                        serves.DeleteItem(list_id, item_id);
                         break;
 
                     }
                 case 7:
                     {
-                        ToDoServiceClient.RemindMe(todoClient);
+                        serves.RemindMe();
                         Console.WriteLine("Enter Id of List:");
                         Int32 list_id = int.Parse(Console.ReadLine());
                         Console.WriteLine("Enter Id of item:");
                         Int32 item_id = int.Parse(Console.ReadLine());
-                        ToDoServiceClient.MarkAsDone(list_id, item_id, todoClient);
+                        serves.MarkAsDone(list_id, item_id);
                         break;
                     }
                 default:
