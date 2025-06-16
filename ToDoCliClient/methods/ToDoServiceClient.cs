@@ -35,12 +35,9 @@ namespace ToDoCliClient.methods
             _todoClient.CreateList(new() { ListName = list_name });
             
             var result = _todoClient.ReadLists(new()).Lists.FirstOrDefault(x => x.ListName == list_name);
+            ConsolePrinter consolePrinter = new ConsolePrinter();
+            consolePrinter.PrintCreatedList(result.Id, result.ListName);
 
-            Console.WriteLine(new string('-', 20));
-            Console.WriteLine("|{0,-10} | {1,-5} |", "ListId", "ListName");
-            Console.WriteLine(new string('-', 20));
-            Console.WriteLine("|{0,-10} | {1,-5} |", result.Id, result.ListName);
-            Console.WriteLine(new string('-', 20));
         }
 
         // Add Item 
@@ -74,53 +71,22 @@ namespace ToDoCliClient.methods
             }
             else
             {
-                Console.WriteLine(new string('-', 65));
-                Console.WriteLine("{0,-12} | {1,-12} | {2,-8} | {3,-15} | {4,-8}",
-                  "ListId", "ListName", "ItemId", "ItemName", "IsDone");
-                Console.WriteLine(new string('-', 65));
-                Console.WriteLine("{0,-12} | {1,-12} | {2,-8} | {3,-15} | {4,-8}",
-                                  result.ToDoListId, result.ListName, result.Id, result.ItemName, result.IsDone);
-                Console.WriteLine(new string('-', 65));
+                ConsolePrinter consolePrinter = new ConsolePrinter();
+                consolePrinter.PrintItem(result);
 
             }
         }
-        public  void ReadLists()
+        public void ReadLists()
         {
             var result = _todoClient.ReadLists(new());
-            foreach (var list in result.Lists)
-            {
-                if (list != null)
-                {
-                    Console.WriteLine($"\n List: {list.ListName} (ID: {list.Id})");
-                    Console.WriteLine(new string('-', 50));
-                    Console.WriteLine("{0,-5} | {1,-20} | {2,-6}", "ID", "Item Name", "Done?");
-                    Console.WriteLine(new string('-', 50));
-
-                    foreach (var item in list.Items)
-                    {
-                        Console.WriteLine("{0,-5} | {1,-20} | {2,-6}", item.Id, item.ItemName, item.IsDone);
-                    }
-
-                    Console.WriteLine(new string('-', 50));
-                }
-                else
-                {
-                    Console.WriteLine("❌ List not found.");
-                }
-            }
+            ConsolePrinter consolePrinter = new ConsolePrinter();
+            consolePrinter.PrintLists(result);
         }
         public   void UpdateItem(int item_id , int list_id , string item_name , bool is_done)
         {
             var result = _todoClient.UpdateItem(new() { Id = item_id , ToDoListId = list_id , ItemName = item_name , IsDone =is_done });
-            if (result != null)
-            {
-                Console.WriteLine("--->>>The Item is updated!!!<<<----");
-            }
-            else
-            {
-                Console.WriteLine("❌ Failed to update the item. Please check the ID and try again.");
-
-            }
+            ConsolePrinter consolePrinter = new ConsolePrinter();
+            consolePrinter.PrintUpdatedItem(result);
         }
         public  void DeleteItem(int list_id, int item_id)
         {
