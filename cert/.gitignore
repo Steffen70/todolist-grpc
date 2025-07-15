@@ -1,0 +1,4 @@
+# Ignore certificate signing serial file generated during CSR signing.
+# Not needed for version control — only used temporarily when signing certs like localhost or forge.swisspension.dev.
+root_ca.srl
+*.csr
