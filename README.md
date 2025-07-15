@@ -27,7 +27,7 @@ During our three-hour coding assessment each candidate is asked to build a simpl
 3. Build a UI that can:
     - Display existing to-do items.
     - Add, update, and delete items through the gRPC service.
-4. If you pick a client-side rendered framework, configure a **reverse proxy** so that your UI and the gRPC backend share the same origin. A pre-built _Caddyfile_ is provided to speed this up.
+4. If you pick a client-side rendered framework, configure a **reverse proxy** so that your UI and the gRPC backend share the same origin. A pre-built _Caddyfile_ is provided to speed this up `caddy run --config Caddyfile`.
 
 ### Certificates & HTTPS
 

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package todo_grpc;
+package swisspension;
 
 option csharp_namespace = "SwissPension.Todo.Common";
 

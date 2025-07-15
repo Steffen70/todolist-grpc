@@ -1,0 +1,25 @@
+{
+	admin off
+	auto_https off
+}
+
+:8443 {
+	tls ./cert/localhost.crt ./cert/localhost.key
+
+	handle /swisspension.Todo* {
+		reverse_proxy https://localhost:8445 {
+			transport http {
+				tls_insecure_skip_verify
+			}
+			header_up Host localhost
+		}
+	}
+
+	# Default frontend reverse proxy
+	reverse_proxy localhost:8444 {
+		header_up Host {host}
+		header_down Access-Control-Allow-Origin "*"
+		header_down Cross-Origin-Embedder-Policy "require-corp"
+		header_down Cross-Origin-Opener-Policy "same-origin"
+	}
+}
