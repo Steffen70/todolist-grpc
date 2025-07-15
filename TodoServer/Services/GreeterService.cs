@@ -1,6 +1,7 @@
 using Grpc.Core;
+using SwissPension.Todo.Common;
 
-namespace ToDoGrpc.Services;
+namespace SwissPension.Todo.Server.Services;
 
 public class GreeterService : Greeter.GreeterBase
 {

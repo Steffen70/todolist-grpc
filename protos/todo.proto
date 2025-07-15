@@ -1,113 +1,106 @@
 ﻿syntax = "proto3";
 
-option csharp_namespace = "ToDoGrpc";
+package todo_grpc;
 
-package todoit;
+option csharp_namespace = "SwissPension.Todo.Common";
 
-service todoit
-{
-	//CreateList
-	rpc CreateList(CreateListToDoRequest) returns (CreateListToDoResponse);
-	//Add Item 
-	rpc AddItemToList(AddItemToDoRequest) returns (AddItemToDoResponse);
-	//ReadItem
-	rpc ReadItem(ReadItemToDoRequest) returns (ReadItemToDoResponse);
-	//ReadAll Tasks
-	rpc ReadLists(Empty) returns (ListResponse);
-	//UpdateItem
-	rpc UpdateItem(UpdateItemToDoRequest) returns (UpdateItemToDoResponse);
-	//DeleteItem
-	rpc DeleteItem(DeleteItemToDoRequest) returns (DeleteItemToDoResponse);
-	//MarkAsDone
-	rpc MarkAsDone(MarkAsDoneToDoRequest) returns (MarkAsDoneToDoResponse);
-}
-//CreateList
-message CreateListToDoRequest
-{
-	string listName=1;
-}
-message CreateListToDoResponse
-{
-	int32 Id=1;
+import "google/protobuf/empty.proto";
+
+service Todo {
+    // CreateList
+    rpc CreateList(CreateListTodoRequest) returns (CreateListTodoResponse);
+    // Add Item
+    rpc AddItemToList(AddItemTodoRequest) returns (AddItemTodoResponse);
+    // ReadItem
+    rpc ReadItem(ReadItemTodoRequest) returns (ReadItemTodoResponse);
+    // ReadAll Tasks
+    rpc ReadLists(google.protobuf.Empty) returns (ListResponse);
+    // UpdateItem
+    rpc UpdateItem(UpdateItemTodoRequest) returns (UpdateItemTodoResponse);
+    // DeleteItem
+    rpc DeleteItem(DeleteItemTodoRequest) returns (DeleteItemTodoResponse);
+    // MarkAsDone
+    rpc MarkAsDone(MarkAsDoneTodoRequest) returns (MarkAsDoneTodoResponse);
 }
 
-// Add item 
-
-message AddItemToDoRequest
-{
-	int32 ToDoListId =1;
-	string ItemName =2;
-	
-}
-message AddItemToDoResponse 
-{
-	int32 ToDoListId =1; 
-	int32 Id = 2;
-}
-//ReadItem
-message ReadItemToDoRequest 
-{
-	int32 ToDoListId =1; 
-	int32 Id = 2;
-}
-message ReadItemToDoResponse  
-{
-	int32 ToDoListId =1; 
-	string ListName=2;
-	int32 Id = 3;
-	string ItemName=4;
-	bool IsDone = 5;
+// CreateList
+message CreateListTodoRequest {
+    string listName = 1;
 }
 
-//List Read
-message Empty
-{
-	
+message CreateListTodoResponse {
+    int32 Id = 1;
 }
-message ListResponse 
-{
-	repeated ListToDoItem Lists =1;
+
+// Add item
+message AddItemTodoRequest {
+    int32 TodoListId = 1;
+    string ItemName  = 2;
 }
-message ListToDoItem
-{
-	string ListName =1;
-	int32 Id  =2;
-	repeated ReadItemToDoResponse Items =3;
+
+message AddItemTodoResponse {
+    int32 TodoListId = 1;
+    int32 Id         = 2;
 }
-//UpdateItem
-message UpdateItemToDoRequest
-{
-	int32 ToDoListId=1;
-	int32 Id=2;
-	string ItemName=3;
-	bool IsDone=4;
+
+// ReadItem
+message ReadItemTodoRequest {
+    int32 TodoListId = 1;
+    int32 Id         = 2;
 }
-message UpdateItemToDoResponse
-{
-	int32 ToDoListId=1;
-	int32 Id=2;
+
+message ReadItemTodoResponse {
+    int32 TodoListId = 1;
+    string ListName  = 2;
+    int32 Id         = 3;
+    string ItemName  = 4;
+    bool IsDone      = 5;
 }
-//DeleteItem
-message DeleteItemToDoRequest
-{
-	int32 ToDoListId=1;
-	int32 Id=2;
+
+// List Read
+message ListResponse {
+    repeated ListTodoItem Lists = 1;
 }
-message DeleteItemToDoResponse
-{
-	int32 ToDoListId=1;
-	int32 Id=2;
+
+message ListTodoItem {
+    string ListName                     = 1;
+    int32 Id                            = 2;
+    repeated ReadItemTodoResponse Items = 3;
 }
-	//MarkAsDone
-message MarkAsDoneToDoRequest
-{
-	int32 ToDoListId=1;
-	int32 Id=2 ;
+
+// UpdateItem
+message UpdateItemTodoRequest {
+    int32 TodoListId = 1;
+    int32 Id         = 2;
+    string ItemName  = 3;
+    bool IsDone      = 4;
 }
-message MarkAsDoneToDoResponse
-{
-	int32 ToDoListId=1;
-	int32 Id=2;
-	string ItemName=3;
-	bool IsDone=4;
+
+message UpdateItemTodoResponse {
+    int32 TodoListId = 1;
+    int32 Id         = 2;
+}
+
+// DeleteItem
+message DeleteItemTodoRequest {
+    int32 TodoListId = 1;
+    int32 Id         = 2;
+}
+
+message DeleteItemTodoResponse {
+    int32 TodoListId = 1;
+    int32 Id         = 2;
+}
+
+// MarkAsDone
+message MarkAsDoneTodoRequest {
+    int32 TodoListId = 1;
+    int32 Id         = 2;
+}
+
+message MarkAsDoneTodoResponse {
+    int32 TodoListId = 1;
+    int32 Id         = 2;
+    string ItemName  = 3;
+    bool IsDone      = 4;
 }
