@@ -59,7 +59,7 @@ internal static class ConsolePrinter
 
             if (list.Items.Count == 0)
             {
-                Console.WriteLine("  No items in this list.\n");
+                Console.WriteLine("    No items in this list.\n");
                 continue;
             }
 
