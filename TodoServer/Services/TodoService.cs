@@ -11,15 +11,15 @@ public class TodoService(AppDbContext dbContext) : Todo.Common.Todo.TodoBase
 {
     public override async Task<CreateListTodoResponse> CreateList(CreateListTodoRequest request, ServerCallContext context)
     {
-        if (request.ListName == string.Empty) 
+        if (request.ListName == string.Empty)
             throw new RpcException(new(StatusCode.InvalidArgument, "List name cannot be empty"));
-        
+
         var todoList = new TodoList(request.ListName);
-        
+
         await dbContext.AddAsync(todoList);
-        
+
         await dbContext.SaveChangesAsync();
-        
+
         return await Task.FromResult(new CreateListTodoResponse
         {
             Id = todoList.Id
@@ -30,16 +30,16 @@ public class TodoService(AppDbContext dbContext) : Todo.Common.Todo.TodoBase
     {
         if (request.ItemName == string.Empty)
             throw new RpcException(new(StatusCode.InvalidArgument, "Item name cannot be empty"));
-            
+
         if (!await dbContext.TodoLists.AnyAsync(x => x.Id == request.TodoListId))
             throw new RpcException(new(StatusCode.NotFound, $"Todo list with ID {request.TodoListId} not found"));
 
         var item = new TodoItem(request.ItemName, request.TodoListId);
-        
+
         await dbContext.AddAsync(item);
-        
+
         await dbContext.SaveChangesAsync();
-        
+
         return new()
         {
             TodoListId = item.TodoListId,
@@ -50,8 +50,8 @@ public class TodoService(AppDbContext dbContext) : Todo.Common.Todo.TodoBase
     public override async Task<ReadItemTodoResponse> ReadItem(ReadItemTodoRequest request, ServerCallContext context)
     {
         var item = await dbContext.TodoItems.Include(x => x.TodoList).FirstOrDefaultAsync(x => x.Id == request.Id && x.TodoListId == request.TodoListId);
-        
-        if (item == null) 
+
+        if (item == null)
             throw new RpcException(new(StatusCode.NotFound, $"Todo item with ID {request.Id} not found in list {request.TodoListId}"));
 
         return await Task.FromResult(new ReadItemTodoResponse
@@ -67,15 +67,15 @@ public class TodoService(AppDbContext dbContext) : Todo.Common.Todo.TodoBase
     public override async Task<UpdateItemTodoResponse> UpdateItem(UpdateItemTodoRequest request, ServerCallContext context)
     {
         var item = await dbContext.TodoItems.Include(x => x.TodoList).FirstOrDefaultAsync(x => x.Id == request.Id && x.TodoListId == request.TodoListId);
-        
+
         Console.WriteLine($"Searching for Item with Id = {request.Id}, ListId = {request.TodoListId}");
 
-        if (item == null) 
+        if (item == null)
             throw new RpcException(new(StatusCode.NotFound, $"Todo item with ID {request.Id} not found in list {request.TodoListId}"));
-            
+
         item.ItemName = request.ItemName;
         item.IsDone = request.IsDone;
-        
+
         await dbContext.SaveChangesAsync();
 
         return new()
@@ -88,14 +88,14 @@ public class TodoService(AppDbContext dbContext) : Todo.Common.Todo.TodoBase
     public override async Task<DeleteItemTodoResponse> DeleteItem(DeleteItemTodoRequest request, ServerCallContext context)
     {
         var item = await dbContext.TodoItems.Include(x => x.TodoList).FirstOrDefaultAsync(x => x.Id == request.Id && x.TodoListId == request.TodoListId);
-        
-        if (item == null) 
+
+        if (item == null)
             throw new RpcException(new(StatusCode.NotFound, $"Todo item with ID {request.Id} not found in list {request.TodoListId}"));
-        
+
         dbContext.TodoItems.Remove(item);
-        
+
         await dbContext.SaveChangesAsync();
-        
+
         return await Task.FromResult(new DeleteItemTodoResponse
         {
             TodoListId = item.TodoListId,
@@ -107,7 +107,7 @@ public class TodoService(AppDbContext dbContext) : Todo.Common.Todo.TodoBase
     {
         var response = new ListResponse();
         var lists = await dbContext.TodoLists.Include(x => x.Items).ToListAsync();
-        
+
         foreach (var l in lists)
         {
             var list = new ListTodoItem
@@ -115,7 +115,7 @@ public class TodoService(AppDbContext dbContext) : Todo.Common.Todo.TodoBase
                 ListName = l.ListName,
                 Id = l.Id
             };
-            
+
             foreach (var i in l.Items)
                 list.Items.Add(new ReadItemTodoResponse
                 {
@@ -125,7 +125,7 @@ public class TodoService(AppDbContext dbContext) : Todo.Common.Todo.TodoBase
                     ItemName = i.ItemName,
                     IsDone = i.IsDone
                 });
-            
+
             response.Lists.Add(list);
         }
 
@@ -135,12 +135,12 @@ public class TodoService(AppDbContext dbContext) : Todo.Common.Todo.TodoBase
     public override async Task<MarkAsDoneTodoResponse> MarkAsDone(MarkAsDoneTodoRequest request, ServerCallContext context)
     {
         var item = await dbContext.TodoItems.Include(x => x.TodoList).FirstOrDefaultAsync(x => x.Id == request.Id && x.TodoListId == request.TodoListId);
-        
-        if (item == null) 
+
+        if (item == null)
             throw new RpcException(new(StatusCode.NotFound, $"Todo item with ID {request.Id} not found in list {request.TodoListId}"));
-        
+
         item.IsDone = true;
-        
+
         await dbContext.SaveChangesAsync();
 
         return new()
