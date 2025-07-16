@@ -1,0 +1,54 @@
+{
+    // General Editor Settings
+    "editor.rulers": [200],
+    "editor.wordWrapColumn": 200,
+    "explorer.sortOrderLexicographicOptions": "unicode",
+    "editor.formatOnSave": true,
+
+    // Files
+    "files.associations": {
+        "*.sql": "sql"
+    },
+    "files.exclude": {
+        "**/bin": false,
+        "**/obj": false
+    },
+    // Removes extra blank lines at EOF
+    "files.trimFinalNewlines": true,
+    // Ensures exactly one newline
+    "files.insertFinalNewline": true,
+
+    // Extension / Language specific formatting
+    // Prettier
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.arrowParens": "avoid",
+    "prettier.bracketSameLine": true,
+    "prettier.printWidth": 200,
+    "prettier.tabWidth": 4,
+    "prettier.trailingComma": "all",
+
+    // Proto3
+    "[proto3]": {
+        "editor.defaultFormatter": "zxh404.vscode-proto3"
+    },
+    "protoc": {
+        "options": ["--proto_path=${workspaceFolder}/sp7/proto"]
+    },
+    "clang-format.style": "{ IndentWidth: 4, BasedOnStyle: google, AlignConsecutiveAssignments: true }",
+
+    // Caddyfile
+    "[caddyfile]": {
+        "editor.defaultFormatter": "matthewpi.caddyfile-support"
+    },
+
+    // XML
+    "[xml]": {
+        "editor.defaultFormatter": "DotJoshJohnson.xml"
+    },
+
+    // HTML
+    "html.format.wrapAttributes": "force-aligned",
+
+    // JavaScript
+    "javascript.updateImportsOnFileMove.enabled": "never"
+}
