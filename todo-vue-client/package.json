@@ -1,0 +1,26 @@
+{
+  "name": "todo-vue-client",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "generate:grpc-stubs": "./generate_grpc_stubs.sh"
+  },
+  "dependencies": {
+    "google-protobuf": "^3.21.4",
+    "grpc-web": "^1.5.0",
+    "vue": "^3.5.17",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@bufbuild/protoc-gen-es": "^2.6.0",
+    "@vitejs/plugin-vue": "^6.0.0",
+    "protoc-gen-grpc-web": "^1.5.0",
+    "protoc-gen-js": "^3.21.4-4",
+    "vite": "^7.0.0",
+    "vite-plugin-vue-devtools": "^7.7.7"
+  }
+}

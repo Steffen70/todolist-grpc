@@ -6,7 +6,7 @@
 :8443 {
 	tls ./cert/localhost.crt ./cert/localhost.key
 
-	handle /swisspension.Todo* {
+	handle /swisspension.* {
 		reverse_proxy https://localhost:8445 {
 			transport http {
 				tls_insecure_skip_verify
@@ -16,10 +16,7 @@
 	}
 
 	# Default frontend reverse proxy
-	reverse_proxy localhost:8444 {
+	reverse_proxy http://localhost:5173 {
 		header_up Host {host}
-		header_down Access-Control-Allow-Origin "*"
-		header_down Cross-Origin-Embedder-Policy "require-corp"
-		header_down Cross-Origin-Opener-Policy "same-origin"
 	}
 }
