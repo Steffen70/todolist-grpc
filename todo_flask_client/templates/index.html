@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>gRPC Greeter (Flask)</title>
+    </head>
+    <body>
+        <h1>Say Hello via gRPC</h1>
+        <form method="post">
+            <input type="text" name="name" placeholder="Enter your name" required />
+            <button type="submit">Say Hello</button>
+        </form>
+        {% if greeting %}
+        <p><strong>Response:</strong> {{ greeting }}</p>
+        {% endif %}
+    </body>
+</html>
