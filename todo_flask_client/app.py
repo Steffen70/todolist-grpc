@@ -18,6 +18,7 @@ def create_greeter_stub():
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    """Home page with gRPC greeter functionality"""
     greeting = None
     if request.method == "POST":
         name = request.form.get("name", "")
@@ -29,3 +30,11 @@ def index():
         except grpc.RpcError as e:
             greeting = f"Error: {e.details()}"
     return render_template("index.html", greeting=greeting)
+
+@app.route("/about")
+def about():
+    """About page"""
+    return render_template("about.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)

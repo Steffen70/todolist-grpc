@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>About - gRPC Greeter (Flask)</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            nav {
+                background-color: #f0f0f0;
+                padding: 10px;
+                margin-bottom: 20px;
+                border-radius: 5px;
+            }
+            nav a {
+                margin-right: 20px;
+                text-decoration: none;
+                color: #333;
+                font-weight: bold;
+            }
+            nav a:hover {
+                color: #007bff;
+            }
+            .active {
+                color: #007bff !important;
+            }
+            .info-section {
+                background-color: #f8f9fa;
+                padding: 20px;
+                margin: 20px 0;
+                border-radius: 5px;
+                border-left: 4px solid #007bff;
+            }
+            .tech-stack {
+                background-color: #e7f3ff;
+                padding: 15px;
+                border-radius: 5px;
+                margin: 10px 0;
+            }
+            .tech-stack ul {
+                margin: 0;
+                padding-left: 20px;
+            }
+            code {
+                background-color: #f1f1f1;
+                padding: 2px 4px;
+                border-radius: 3px;
+                font-family: monospace;
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/about" class="active">About</a>
+        </nav>
+
+        <h1>About This Application</h1>
+
+        <div class="info-section">
+            <h2>Overview</h2>
+            <p>
+                This is a simple Flask web application that demonstrates gRPC communication. The application acts as a client that connects to a gRPC server to send greeting requests and display
+                responses.
+            </p>
+        </div>
+
+        <div class="info-section">
+            <h2>Technology Stack</h2>
+            <div class="tech-stack">
+                <ul>
+                    <li><strong>Flask:</strong> Web framework for Python</li>
+                    <li><strong>gRPC:</strong> High-performance RPC framework</li>
+                    <li><strong>Protocol Buffers:</strong> Language-neutral serialization mechanism</li>
+                    <li><strong>Pipenv:</strong> Python dependency management</li>
+                    <li><strong>SSL/TLS:</strong> Secure communication with certificates</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Features</h2>
+            <ul>
+                <li>Simple greeter service via gRPC</li>
+                <li>Secure communication using SSL certificates</li>
+                <li>Error handling for failed gRPC calls</li>
+                <li>Clean web interface with Flask</li>
+                <li>Automatic gRPC stub generation</li>
+            </ul>
+        </div>
+
+        <div class="info-section">
+            <h2>Project Structure</h2>
+            <p>The application consists of:</p>
+            <ul>
+                <li><code>app.py</code> - Main Flask application</li>
+                <li><code>greet.proto</code> - Protocol buffer definition</li>
+                <li><code>generate_grpc_stubs.sh</code> - Script to generate gRPC stubs</li>
+                <li><code>templates/</code> - HTML templates</li>
+                <li><code>generated/</code> - Auto-generated gRPC Python code</li>
+            </ul>
+        </div>
+
+        <div class="info-section">
+            <h2>Location</h2>
+            <p>Developed in Bern, Switzerland 🇨🇭</p>
+        </div>
+    </body>
+</html>
