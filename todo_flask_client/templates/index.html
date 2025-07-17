@@ -2,77 +2,166 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>gRPC Greeter (Flask)</title>
+        <title>Todo Lists - gRPC Client</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
-                max-width: 800px;
+                max-width: 1000px;
                 margin: 0 auto;
                 padding: 20px;
+                background-color: #f5f5f5;
             }
             nav {
-                background-color: #f0f0f0;
-                padding: 10px;
+                background-color: #007bff;
+                padding: 15px;
                 margin-bottom: 20px;
                 border-radius: 5px;
             }
             nav a {
                 margin-right: 20px;
                 text-decoration: none;
-                color: #333;
+                color: white;
                 font-weight: bold;
             }
             nav a:hover {
-                color: #007bff;
+                color: #cce7ff;
             }
             .active {
-                color: #007bff !important;
+                color: #cce7ff !important;
+                text-decoration: underline;
             }
-            form {
-                margin: 20px 0;
+            h1 {
+                color: #333;
+                margin-bottom: 10px;
             }
-            input[type="text"] {
-                padding: 8px;
-                margin-right: 10px;
+            .subtitle {
+                color: #666;
+                margin-bottom: 30px;
+            }
+            .error {
+                background-color: #f8d7da;
+                color: #721c24;
+                padding: 15px;
+                border-radius: 5px;
+                border: 1px solid #f5c6cb;
+                margin-bottom: 20px;
+            }
+            .no-lists {
+                text-align: center;
+                color: #666;
+                padding: 40px;
+                background-color: white;
+                border-radius: 5px;
                 border: 1px solid #ddd;
-                border-radius: 4px;
             }
-            button {
-                padding: 8px 16px;
+            .todo-list {
+                background-color: white;
+                margin-bottom: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+            }
+            .list-header {
                 background-color: #007bff;
                 color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
+                padding: 15px 20px;
+                font-size: 18px;
+                font-weight: bold;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
             }
-            button:hover {
-                background-color: #0056b3;
+            .list-id {
+                background-color: rgba(255, 255, 255, 0.2);
+                padding: 4px 8px;
+                border-radius: 3px;
+                font-size: 12px;
             }
-            .response {
-                margin-top: 20px;
-                padding: 10px;
-                background-color: #e7f3ff;
-                border-left: 4px solid #007bff;
-                border-radius: 4px;
+            .todo-items {
+                padding: 0;
+            }
+            .todo-item {
+                padding: 15px 20px;
+                border-bottom: 1px solid #eee;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .todo-item:last-child {
+                border-bottom: none;
+            }
+            .item-content {
+                flex: 1;
+            }
+            .item-name {
+                font-weight: 500;
+                color: #333;
+            }
+            .item-details {
+                font-size: 12px;
+                color: #666;
+                margin-top: 5px;
+            }
+            .item-status {
+                padding: 4px 8px;
+                border-radius: 12px;
+                font-size: 11px;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+            .status-done {
+                background-color: #d4edda;
+                color: #155724;
+            }
+            .status-pending {
+                background-color: #fff3cd;
+                color: #856404;
+            }
+            .empty-list {
+                padding: 20px;
+                text-align: center;
+                color: #999;
+                font-style: italic;
             }
         </style>
     </head>
     <body>
         <nav>
-            <a href="/" class="active">Home</a>
+            <a href="/" class="active">Todo Lists</a>
             <a href="/about">About</a>
         </nav>
 
-        <h1>Say Hello via gRPC</h1>
-        <p>This page demonstrates a simple gRPC client that communicates with a greeter service.</p>
+        <h1>Todo Lists</h1>
+        <p class="subtitle">Displaying all todo lists and their items fetched via gRPC</p>
 
-        <form method="post">
-            <input type="text" name="name" placeholder="Enter your name" required />
-            <button type="submit">Say Hello</button>
-        </form>
+        {% if error_message %}
+        <div class="error"><strong>Error:</strong> {{ error_message }}</div>
+        {% endif %} {% if lists %} {% for list in lists %}
+        <div class="todo-list">
+            <div class="list-header">
+                <span>{{ list.ListName }}</span>
+                <span class="list-id">ID: {{ list.Id }}</span>
+            </div>
 
-        {% if greeting %}
-        <div class="response"><strong>Response:</strong> {{ greeting }}</div>
-        {% endif %}
+            <div class="todo-items">
+                {% if list.Items %} {% for item in list.Items %}
+                <div class="todo-item">
+                    <div class="item-content">
+                        <div class="item-name">{{ item.ItemName }}</div>
+                        <div class="item-details">Item ID: {{ item.Id }} | List ID: {{ item.TodoListId }}</div>
+                    </div>
+                    <div class="item-status {% if item.IsDone %}status-done{% else %}status-pending{% endif %}">{% if item.IsDone %}Done{% else %}Pending{% endif %}</div>
+                </div>
+                {% endfor %} {% else %}
+                <div class="empty-list">No items in this list</div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %} {% else %} {% if not error_message %}
+        <div class="no-lists">
+            <h3>No Todo Lists Found</h3>
+            <p>There are currently no todo lists to display.</p>
+        </div>
+        {% endif %} {% endif %}
     </body>
 </html>
