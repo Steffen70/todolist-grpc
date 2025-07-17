@@ -26,6 +26,23 @@ public class TodoService(AppDbContext dbContext) : Todo.Common.Todo.TodoBase
         });
     }
 
+    public override async Task<DeleteListTodoResponse> DeleteList(DeleteListTodoRequest request, ServerCallContext context)
+    {
+        var todoList = await dbContext.TodoLists.Include(x => x.Items).FirstOrDefaultAsync(x => x.Id == request.Id);
+
+        if (todoList == null)
+            throw new RpcException(new(StatusCode.NotFound, $"Todo list with ID {request.Id} not found"));
+
+        dbContext.TodoLists.Remove(todoList);
+
+        await dbContext.SaveChangesAsync();
+
+        return await Task.FromResult(new DeleteListTodoResponse
+        {
+            Id = todoList.Id
+        });
+    }
+
     public override async Task<AddItemTodoResponse> AddItemToList(AddItemTodoRequest request, ServerCallContext context)
     {
         if (request.ItemName == string.Empty)

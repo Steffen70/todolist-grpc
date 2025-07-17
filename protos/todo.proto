@@ -9,6 +9,8 @@ import "google/protobuf/empty.proto";
 service Todo {
     // CreateList
     rpc CreateList(CreateListTodoRequest) returns (CreateListTodoResponse);
+    // DeleteList
+    rpc DeleteList(DeleteListTodoRequest) returns (DeleteListTodoResponse);
     // Add Item
     rpc AddItemToList(AddItemTodoRequest) returns (AddItemTodoResponse);
     // ReadItem
@@ -29,6 +31,15 @@ message CreateListTodoRequest {
 }
 
 message CreateListTodoResponse {
+    int32 Id = 1;
+}
+
+// DeleteList
+message DeleteListTodoRequest {
+    int32 Id = 1;
+}
+
+message DeleteListTodoResponse {
     int32 Id = 1;
 }
 
