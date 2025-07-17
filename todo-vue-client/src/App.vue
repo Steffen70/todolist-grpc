@@ -1,81 +1,27 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-import Greeter from "./components/Greeter.vue";
 import Todo from "./components/Todo.vue";
 </script>
 
 <template>
-    <header></header>
-
-    <Greeter />
-
-    <h1>My Todo List App</h1>
-    <br />
-    <Todo />
-
-    <!-- RouterView -->
+    <v-app>
+        <v-container class="my-container" fluid>
+            <v-row>
+                <v-col>
+                    <header></header>
+                    <h1>My Todo List App</h1>
+                    <Todo />
+                </v-col>
+            </v-row>
+        </v-container>
+    </v-app>
 </template>
 
 <style scoped>
-header {
-    line-height: 1.5;
-    max-height: 100vh;
-}
-
-.logo {
-    display: block;
-    margin: 0 auto 2rem;
-}
-
-nav {
-    width: 100%;
-    font-size: 12px;
-    text-align: center;
-    margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-    color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-    background-color: transparent;
-}
-
-nav a {
-    display: inline-block;
-    padding: 0 1rem;
-    border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-    border: 0;
-}
-
-@media (min-width: 1024px) {
-    header {
-        display: flex;
-        place-items: center;
-        padding-right: calc(var(--section-gap) / 2);
-    }
-
-    .logo {
-        margin: 0 2rem 0 0;
-    }
-
-    header .wrapper {
-        display: flex;
-        place-items: flex-start;
-        flex-wrap: wrap;
-    }
-
-    nav {
-        text-align: left;
-        margin-left: -1rem;
-        font-size: 1rem;
-
-        padding: 1rem 0;
-        margin-top: 1rem;
-    }
+.my-container {
+    max-width: 1000px !important;
+    width: 80vw !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 </style>

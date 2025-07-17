@@ -1,32 +1,60 @@
 <template>
-    <div>
-        <h2>Create New Todo List</h2>
-        <input v-model="newListName" placeholder="List name" />
-        <button @click="createList">Create</button>
+    <v-container>
+        <v-row>
+            <!-- <v-col cols="12" md="6" class="mx-auto"> -->
+            <v-col style="width: 100%">
+                <v-card class="pa-4">
+                    <v-card-title>Create New Todo List</v-card-title>
 
-        <hr />
+                    <v-text-field v-model="newListName" label="List name" dense clearable @keyup.enter="createList" />
+                    <v-btn color="primary" @click="createList">Create</v-btn>
+                </v-card>
 
-        <div v-for="list in lists" :key="list.id" class="list">
-            <h3>
-                {{ list.listName }}
-                <button @click="deleteList(list.id)">🗑️</button>
-            </h3>
+                <v-divider class="my-6"></v-divider>
 
-            <input v-model="newItems[list.id]" placeholder="Add new item" @keyup.enter="addItem(list.id)" />
-            <button @click="addItem(list.id)">+</button>
+                <div v-for="list in lists" :key="list.id" class="mb-6">
+                    <v-card>
+                        <v-card-title class="d-flex justify-space-between align-center">
+                            <div>{{ list.listName }}</div>
+                            <v-btn icon color="red" @click="deleteList(list.id)" title="Delete list">
+                                <v-icon>mdi-delete</v-icon>
+                            </v-btn>
+                        </v-card-title>
 
-            <ul>
-                <li v-for="item in list.items" :key="item.id">
-                    <input v-if="editingItemId === item.id" v-model="editedItemName" @keyup.enter="saveItemEdit(item, list.id)" @blur="cancelEdit" autofocus />
-                    <span v-else @dblclick="startEditing(item)">
-                        <input type="checkbox" :checked="item.isDone" :disabled="item.isDone" @change="toggleItemDone(list.id, item)" />
-                        {{ item.itemName }}
-                        <button @click="deleteItem(list.id, item.id)">🗑️</button>
-                    </span>
-                </li>
-            </ul>
-        </div>
-    </div>
+                        <v-card-text>
+                            <v-row class="align-center mb-4">
+                                <v-col>
+                                    <v-text-field v-model="newItems[list.id]" label="Add new item" dense clearable @keyup.enter="addItem(list.id)" />
+                                </v-col>
+                                <v-col cols="auto">
+                                    <v-btn color="primary" @click="addItem(list.id)">+</v-btn>
+                                </v-col>
+                            </v-row>
+
+                            <v-list dense>
+                                <v-list-item v-for="item in list.items" :key="item.id" class="d-flex align-center">
+                                    <div v-if="editingItemId === item.id" class="flex-grow-1">
+                                        <v-text-field v-model="editedItemName" dense autofocus @keyup.enter="saveItemEdit(item, list.id)" @blur="cancelEdit" />
+                                    </div>
+
+                                    <div v-else class="flex-grow-1 d-flex align-center" @dblclick="startEditing(item)" style="cursor: pointer">
+                                        <v-checkbox v-model="item.isDone" :disabled="item.isDone" @change="toggleItemDone(list.id, item)" class="mr-3" hide-details />
+                                        <span :style="{ textDecoration: item.isDone ? 'line-through' : 'none' }">
+                                            {{ item.itemName }}
+                                        </span>
+                                    </div>
+
+                                    <v-btn icon color="red" @click="deleteItem(list.id, item.id)" title="Delete item">
+                                        <v-icon>mdi-delete</v-icon>
+                                    </v-btn>
+                                </v-list-item>
+                            </v-list>
+                        </v-card-text>
+                    </v-card>
+                </div>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 <script>
