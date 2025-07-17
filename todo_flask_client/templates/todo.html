@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Meine Todo-Listen</title>
+        <link rel="stylesheet" href="/static/style.css" />
+        <!-- optional -->
+    </head>
+    <body>
+        <h1>📝 Todo-Listen</h1>
+
+        <!-- Flash-Nachrichten anzeigen -->
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+        <ul>
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %} {% endwith %}
+
+        <!-- Neue Liste erstellen -->
+        <form method="POST">
+            <input type="text" name="listName" placeholder="Neue Liste erstellen" required />
+            <button type="submit">➕ Liste hinzufügen</button>
+        </form>
+
+        <hr />
+
+        <!-- Listen und ihre Einträge anzeigen -->
+        {% for list in todos %}
+        <section>
+            <h2>{{ list.ListName }} (ID: {{ list.Id }})</h2>
+            {% if list.Items %}
+            <ul>
+                {% for item in list.Items %}
+                <li>
+                    <strong>{{ item.ItemName }}</strong>
+                    {% if item.IsDone %} ✅ erledigt {% else %} ⏳ offen {% endif %}
+                    <br />
+                    <small>Task-ID: {{ item.Id }}</small>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>Keine Einträge vorhanden.</p>
+            {% endif %}
+        </section>
+        <hr />
+        {% endfor %}
+    </body>
+</html>
