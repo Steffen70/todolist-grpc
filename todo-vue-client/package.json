@@ -10,10 +10,12 @@
     "generate:grpc-stubs": "./generate_grpc_stubs.sh"
   },
   "dependencies": {
+    "@mdi/font": "^7.4.47",
     "google-protobuf": "^3.21.4",
     "grpc-web": "^1.5.0",
     "vue": "^3.5.17",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.5.1",
+    "vuetify": "^3.9.1"
   },
   "devDependencies": {
     "@bufbuild/protoc-gen-es": "^2.6.0",

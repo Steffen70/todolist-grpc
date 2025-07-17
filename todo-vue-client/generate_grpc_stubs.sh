@@ -4,6 +4,8 @@ set -e
 # Get the directory where the script resides
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OUTDIR="$DIR/node_modules/grpc-stubs"
+# Load all proto files dynamically 
+PROTO_FILES=$(find "$DIR/../protos" -name '*.proto')
 
 export PATH="$DIR/node_modules/.bin:$PATH"
 
@@ -17,7 +19,7 @@ fi
 protoc -I="$DIR/../protos" \
   --js_out=import_style=commonjs:"$OUTDIR" \
   --grpc-web_out=import_style=commonjs,mode=grpcwebtext:"$OUTDIR" \
-  "$DIR/../protos/greet.proto"
+  $PROTO_FILES
 
 cat > "$OUTDIR/package.json" << EOF
 {
