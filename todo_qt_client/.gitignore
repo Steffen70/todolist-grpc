@@ -1,0 +1,5 @@
+# Conan
+build-*
+CMakeUserPresets.json
+
+publish/

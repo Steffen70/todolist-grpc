@@ -1,0 +1,29 @@
+{
+    "version": 4,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 23
+    },
+    "configurePresets": [
+        {
+            "name": "build-debug",
+            "generator": "Unix Makefiles",
+            "description": "Debug build with Conan",
+            "binaryDir": "${sourceDir}/build-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_TOOLCHAIN_FILE": "build-debug/conan_toolchain.cmake"
+            }
+        },
+        {
+            "name": "build-release",
+            "generator": "Unix Makefiles",
+            "description": "Release build with Conan",
+            "binaryDir": "${sourceDir}/build-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_TOOLCHAIN_FILE": "build-release/conan_toolchain.cmake"
+            }
+        }
+    ]
+}
