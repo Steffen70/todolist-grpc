@@ -139,18 +139,18 @@
         {% endif %} {% if lists %} {% for list in lists %}
         <div class="todo-list">
             <div class="list-header">
-                <span>{{ list.ListName }}</span>
-                <span class="list-id">ID: {{ list.Id }}</span>
+                <span>{{ list.list_name }}</span>
+                <span class="list-id">ID: {{ list.id }}</span>
             </div>
 
             <div class="todo-items">
-                {% if list.Items %} {% for item in list.Items %}
+                {% if list.items %} {% for item in list.items %}
                 <div class="todo-item">
                     <div class="item-content">
-                        <div class="item-name">{{ item.ItemName }}</div>
-                        <div class="item-details">Item ID: {{ item.Id }} | List ID: {{ item.TodoListId }}</div>
+                        <div class="item-name">{{ item.item_name }}</div>
+                        <div class="item-details">Item ID: {{ item.id }} | List ID: {{ item.todo_list_id }}</div>
                     </div>
-                    <div class="item-status {% if item.IsDone %}status-done{% else %}status-pending{% endif %}">{% if item.IsDone %}Done{% else %}Pending{% endif %}</div>
+                    <div class="item-status {% if item.is_done %}status-done{% else %}status-pending{% endif %}">{% if item.is_done %}Done{% else %}Pending{% endif %}</div>
                 </div>
                 {% endfor %} {% else %}
                 <div class="empty-list">No items in this list</div>

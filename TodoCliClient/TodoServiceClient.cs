@@ -100,7 +100,7 @@ public class TodoServiceClient(Todo.Common.Todo.TodoClient todoClient)
 
     public static string PromptNonEmpty(string prompt)
     {
-        string? input;
+        string input;
         do
         {
             Console.Write(prompt);

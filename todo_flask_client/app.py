@@ -28,7 +28,7 @@ def index():
         stub = create_todo_stub()
         # Call ReadLists with Empty message
         response = stub.ReadLists(empty_pb2.Empty(), timeout=5)
-        lists = response.Lists
+        lists = response.lists
     except grpc.RpcError as e:
         error_message = f"Error fetching todo lists: {e.details()}"
     except Exception as e:

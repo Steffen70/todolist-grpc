@@ -27,91 +27,91 @@ service Todo {
 
 // CreateList
 message CreateListTodoRequest {
-    string listName = 1;
+    string list_name = 1;
 }
 
 message CreateListTodoResponse {
-    int32 Id = 1;
+    int32 id = 1;
 }
 
 // DeleteList
 message DeleteListTodoRequest {
-    int32 Id = 1;
+    int32 id = 1;
 }
 
 message DeleteListTodoResponse {
-    int32 Id = 1;
+    int32 id = 1;
 }
 
 // Add item
 message AddItemTodoRequest {
-    int32 TodoListId = 1;
-    string ItemName  = 2;
+    int32 todo_list_id = 1;
+    string item_name   = 2;
 }
 
 message AddItemTodoResponse {
-    int32 TodoListId = 1;
-    int32 Id         = 2;
+    int32 todo_list_id = 1;
+    int32 id           = 2;
 }
 
 // ReadItem
 message ReadItemTodoRequest {
-    int32 TodoListId = 1;
-    int32 Id         = 2;
+    int32 todo_list_id = 1;
+    int32 id           = 2;
 }
 
 message ReadItemTodoResponse {
-    int32 TodoListId = 1;
-    string ListName  = 2;
-    int32 Id         = 3;
-    string ItemName  = 4;
-    bool IsDone      = 5;
+    int32 todo_list_id = 1;
+    string list_name   = 2;
+    int32 id           = 3;
+    string item_name   = 4;
+    bool is_done       = 5;
 }
 
 // List Read
 message ListResponse {
-    repeated ListTodoItem Lists = 1;
+    repeated ListTodoItem lists = 1;
 }
 
 message ListTodoItem {
-    string ListName                     = 1;
-    int32 Id                            = 2;
-    repeated ReadItemTodoResponse Items = 3;
+    string list_name                    = 1;
+    int32 id                            = 2;
+    repeated ReadItemTodoResponse items = 3;
 }
 
 // UpdateItem
 message UpdateItemTodoRequest {
-    int32 TodoListId = 1;
-    int32 Id         = 2;
-    string ItemName  = 3;
-    bool IsDone      = 4;
+    int32 todo_list_id = 1;
+    int32 id           = 2;
+    string item_name   = 3;
+    bool is_done       = 4;
 }
 
 message UpdateItemTodoResponse {
-    int32 TodoListId = 1;
-    int32 Id         = 2;
+    int32 todo_list_id = 1;
+    int32 id           = 2;
 }
 
 // DeleteItem
 message DeleteItemTodoRequest {
-    int32 TodoListId = 1;
-    int32 Id         = 2;
+    int32 todo_list_id = 1;
+    int32 id           = 2;
 }
 
 message DeleteItemTodoResponse {
-    int32 TodoListId = 1;
-    int32 Id         = 2;
+    int32 todo_list_id = 1;
+    int32 id           = 2;
 }
 
 // MarkAsDone
 message MarkAsDoneTodoRequest {
-    int32 TodoListId = 1;
-    int32 Id         = 2;
+    int32 todo_list_id = 1;
+    int32 id           = 2;
 }
 
 message MarkAsDoneTodoResponse {
-    int32 TodoListId = 1;
-    int32 Id         = 2;
-    string ItemName  = 3;
-    bool IsDone      = 4;
+    int32 todo_list_id = 1;
+    int32 id           = 2;
+    string item_name   = 3;
+    bool is_done       = 4;
 }

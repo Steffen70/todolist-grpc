@@ -6,12 +6,11 @@ Breakdown of the directory structure:
 
 ```text
 cert/
-├── root_ca.crt                           # Public CA cert (trusted by browser/system)
-├── root_ca.key                           # Private CA key (kept secret)
-├── localhost.crt                         # Signed certificate for localhost
-├── localhost.key                         # Corresponding private key
-├── localhost.pem                         # Combined cert+key for Kestrel (used in .NET)
-├── swisspension_dev_root_ca.mobileconfig # Mobileconfig file to install the root_ca.crt on iOS devices
+├── root_ca.crt    # Public CA cert (trusted by browser/system)
+├── root_ca.key    # Private CA key (kept secret)
+├── localhost.crt  # Signed certificate for localhost
+├── localhost.key  # Corresponding private key
+├── localhost.pem  # Combined cert+key for Kestrel (used in .NET)
 ```
 
 **Note:** You can follow the steps below to create a full self-signed certificate setup manually, or simply run `./create.sh` to generate both the Root CA and localhost certificate. If the Root CA already exists, you can just update the IP in `localhost.conf` and run `./create_localhost_cert.sh` to regenerate only the localhost certificate while keeping the existing Root CA.
@@ -23,7 +22,7 @@ Open `localhost.conf` and update the `IP.1` entry under `[alt_names]` to match y
 ```ini
 [alt_names]
 DNS.1 = localhost
-IP.1  = 172.20.2.114    ; ← Replace with your actual LAN IP
+IP.1  = 172.20.2.114  ; ← Replace with your actual LAN IP
 ```
 
 **Note:** This must match the address used when accessing the dev site from your iPhone (e.g. `https://192.168.1.100:8443`).
