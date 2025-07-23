@@ -11,7 +11,19 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_executable(${PROJECT_DIR_NAME} main.cpp)
+file(GLOB_RECURSE SRC_FILES
+    # re-evaluate on file additions
+    CONFIGURE_DEPENDS
+    src/*.cpp
+)
+
+add_executable(${PROJECT_NAME} ${SRC_FILES})
+
+target_include_directories(${PROJECT_NAME}
+    PUBLIC
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+)
 
 find_package(fmt REQUIRED CONFIG)
 target_link_libraries(${PROJECT_DIR_NAME} PRIVATE fmt::fmt)

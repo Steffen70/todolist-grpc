@@ -46,7 +46,7 @@ run_for_preset() {
 
     # Install Conan dependencies and generate toolchain
     echo "Installing Conan dependencies..."
-    conan install . --output-folder="$BUILD_DIR" --build=missing -s build_type="$BUILD_TYPE"
+    conan install . --output-folder="$BUILD_DIR" --build=missing -s build_type="$BUILD_TYPE" --lockfile-out="conan.lock"
 
     # Use the CMake preset for configuration
     echo "Configuring with CMake preset..."

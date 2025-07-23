@@ -101,8 +101,6 @@ pipx install conan
 
 # Build (Debug)
 cmake --build build-debug
-# Or use the deployment script
-./publish.sh
 ```
 
 ### Python Flask Client (`todo_flask_client/`)
