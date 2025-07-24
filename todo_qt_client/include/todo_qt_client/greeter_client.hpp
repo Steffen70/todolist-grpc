@@ -20,9 +20,9 @@ public:
     GreeterClient& operator=(GreeterClient&&) = default;
 
     // Perform the RPC and return the reply or throw on error
-    std::string sayHello(const std::string& name);
+    [[nodiscard]] std::string sayHello(const std::string& name) const;
 
 private:
-    std::shared_ptr<grpc::Channel> _channel;
-    std::unique_ptr<swisspension::Greeter::Stub> _stub;
+    std::shared_ptr<grpc::Channel> channel_;
+    std::unique_ptr<swisspension::Greeter::Stub> stub_;
 };

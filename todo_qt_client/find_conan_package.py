@@ -1,6 +1,6 @@
 from __future__ import annotations
-import argparse
 
+import argparse
 from conan.api.conan_api import ConanAPI
 from conan.api.model import RecipeReference, PkgReference
 
@@ -16,6 +16,7 @@ def main() -> None:
     pref = PkgReference.loads(full_ref)
     build_path = api.cache.build_path(pref)
     print(build_path)
+
 
 if __name__ == "__main__":
     main()

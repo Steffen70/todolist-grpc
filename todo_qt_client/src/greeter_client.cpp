@@ -20,11 +20,11 @@ GreeterClient::GreeterClient(const std::string& target, const std::string& root_
     grpc::SslCredentialsOptions ssl_opts;
     ssl_opts.pem_root_certs = readFile(root_ca_path);
 
-    _channel = grpc::CreateChannel(target, grpc::SslCredentials(ssl_opts));
-    _stub = swisspension::Greeter::NewStub(_channel);
+    channel_ = grpc::CreateChannel(target, grpc::SslCredentials(ssl_opts));
+    stub_ = swisspension::Greeter::NewStub(channel_);
 }
 
-std::string GreeterClient::sayHello(const std::string& name)
+std::string GreeterClient::sayHello(const std::string& name) const
 {
     swisspension::HelloRequest req;
     req.set_name(name);
@@ -32,8 +32,7 @@ std::string GreeterClient::sayHello(const std::string& name)
     swisspension::HelloReply rep;
     grpc::ClientContext ctx;
 
-    const grpc::Status st = _stub->SayHello(&ctx, req, &rep);
-    if (!st.ok())
+    if (const grpc::Status st = stub_->SayHello(&ctx, req, &rep); !st.ok())
         throw std::runtime_error("RPC failed: " + st.error_message());
 
     return rep.message();
