@@ -11,6 +11,10 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
 file(GLOB_RECURSE SRC_FILES
         CONFIGURE_DEPENDS
         src/*.cpp
@@ -28,6 +32,7 @@ target_include_directories(${PROJECT_NAME}
 
 find_package(gRPC REQUIRED CONFIG)
 find_package(fmt REQUIRED CONFIG)
+find_package(Qt6 COMPONENTS Widgets REQUIRED)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE gRPC::grpc++ fmt::fmt)
 

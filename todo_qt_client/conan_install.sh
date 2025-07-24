@@ -38,7 +38,6 @@ run_for_preset() {
 
     echo "Found preset: $PRESET_NAME"
     echo "BUILD_DIR: $BUILD_DIR"
-    echo "BUILD_TYPE: $BUILD_TYPE"
 
     # Clean up any existing build directory
     if [ -d "$BUILD_DIR" ]; then
@@ -50,10 +49,11 @@ run_for_preset() {
 
     # Install Conan dependencies and generate toolchain
     echo "Installing Conan dependencies..."
-    conan install . --output-folder="$BUILD_DIR" --build=missing -s build_type="$BUILD_TYPE" --lockfile-out="conan.lock"
+    conan install . -c tools.system.package_manager:mode=install -c tools.system.package_manager:sudo=True --output-folder="$BUILD_DIR" --build=missing --lockfile-out="conan.lock" -s build_type="$BUILD_TYPE"
+    rm "$DIR/CMakeUserPresets.json"
 
     # Use the CMake preset for configuration
-    echo "Configuring with CMake preset..."
+    echo "Configuring with CMake preset $PRESET_NAME ..."
     cmake --preset "$PRESET_NAME"
 
     # Output the build directory for potential use by other scripts

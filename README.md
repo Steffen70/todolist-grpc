@@ -94,10 +94,21 @@ pipx ensurepath
 # Use pipx to install Conan for clean and reproducible C++ dependency management.
 pipx install conan
 
-# Check that your Conan profile (typically at ~/.conan2/profiles/default) sets compiler=gcc (or clang), compiler.cppstd=20, and a compiler version matching your system toolchain.
+# Check that your Conan profile (typically at ~/.conan2/profiles/default) sets compiler=gcc (or clang), compiler.cppstd=gnu20, and a compiler version matching your system toolchain.
 
 # Install all required C++ dependencies for both debug and release configurations, or specify the profile such as build-debug.
 ./conan_install.sh
+
+# pipx uninstall conan
+# sudo apt install python3-socks
+# pipx install --system-site-packages conan
+# export http_proxy="socks5h://desktop.seventy.mx:443"
+# export https_proxy="socks5h://desktop.seventy.mx:443"
+# export all_proxy="socks5h://desktop.seventy.mx:443"
+# export HTTP_PROXY="socks5h://desktop.seventy.mx:443"
+# export HTTPS_PROXY="socks5h://desktop.seventy.mx:443"
+# export ALL_PROXY="socks5h://desktop.seventy.mx:443"
+# ./conan_install.sh
 
 # Generate C++ gRPC stub sources from the .proto files using the provided stub generation script.
 ./generate_grpc_stubs.sh
