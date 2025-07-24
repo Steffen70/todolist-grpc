@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-PRESETS_FILE="CMakePresets.json"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PRESETS_FILE="$DIR/CMakePresets.json"
 
 # Function to install/build one preset
 run_for_preset() {
@@ -32,17 +33,20 @@ run_for_preset() {
     local BUILD_TYPE
     BUILD_TYPE=$(echo "$preset_data" | jq -r '.buildType')
 
-    # Handle variable substitution in binaryDir (${sourceDir} -> current directory)
-    local SOURCE_DIR
-    SOURCE_DIR="$(pwd)"
-    BUILD_DIR="${BUILD_DIR//\$\{sourceDir\}/$SOURCE_DIR}"
+    # Handle variable substitution in binaryDir (${sourceDir} -> script directory)
+    BUILD_DIR="${BUILD_DIR//\$\{sourceDir\}/$DIR}"
 
     echo "Found preset: $PRESET_NAME"
     echo "BUILD_DIR: $BUILD_DIR"
     echo "BUILD_TYPE: $BUILD_TYPE"
 
     # Clean up any existing build directory
-    rm -rf "$BUILD_DIR"
+    if [ -d "$BUILD_DIR" ]; then
+        rm -rf "$BUILD_DIR"/*
+    else
+        mkdir -p "$BUILD_DIR"
+    fi
+
 
     # Install Conan dependencies and generate toolchain
     echo "Installing Conan dependencies..."

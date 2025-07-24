@@ -2,4 +2,4 @@
 build-*
 CMakeUserPresets.json
 
-publish/
+generated/
