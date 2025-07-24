@@ -1,6 +1,6 @@
 [requires]
 fmt/11.2.0
-grpc/1.72.0
+grpc/1.54.3
 
 [generators]
 CMakeDeps

@@ -12,18 +12,21 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 file(GLOB_RECURSE SRC_FILES
-    # re-evaluate on file additions
     CONFIGURE_DEPENDS
     src/*.cpp
+    generated/**/*.pb.cc
 )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES})
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC
-        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:include>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/generated>
+    $<INSTALL_INTERFACE:include>
 )
 
+find_package(gRPC REQUIRED CONFIG)
 find_package(fmt REQUIRED CONFIG)
-target_link_libraries(${PROJECT_DIR_NAME} PRIVATE fmt::fmt)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE gRPC::grpc++ fmt::fmt)

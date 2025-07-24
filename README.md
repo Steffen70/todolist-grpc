@@ -80,69 +80,74 @@ dotnet run
 ### C++ Client (`todo_qt_client/`)
 
 ```sh
-# Install build-essential C++ tools and Python for Conan
-sudo apt install build-essential cmake python3-pip python3-jinja2
+# Install all necessary C++ build tools, CMake, Python, Jinja2, and the system Protobuf compiler.
+sudo apt install build-essential cmake python3-pip python3-jinja2 protobuf-compiler
 
-# For isolated Python CLI tools
+# Confirm the installed protoc version matches the Protobuf version used by your Conan gRPC package.
+# See https://conan.io/center/recipes/grpc?version=1.54.3 for version compatibility details.
+protoc --version
+
+# Install pipx for isolated Python CLI tool management and ensure the pipx path is active.
 pip3 install --user pipx
 pipx ensurepath
 
-# Install Conan using pipx
+# Use pipx to install Conan for clean and reproducible C++ dependency management.
 pipx install conan
 
-# Make sure your Conan profile (~/.conan2/profiles/default) specifies:
-# compiler=gcc (or clang), compiler.cppstd=20, and compiler.version matches your system
+# Check that your Conan profile (typically at ~/.conan2/profiles/default) sets compiler=gcc (or clang), compiler.cppstd=20, and a compiler version matching your system toolchain.
 
-# Install C++ dependencies for both debug and release (or pass build type, e.g. build-debug)
+# Install all required C++ dependencies for both debug and release configurations, or specify the profile such as build-debug.
 ./conan_install.sh
 
-# Generate C++ gRPC stubs
+# Generate C++ gRPC stub sources from the .proto files using the provided stub generation script.
 ./generate_grpc_stubs.sh
 
-# Build (Debug)
+# Build the project in Debug configuration as an example.
 cmake --build build-debug
 ```
 
 ### Python Flask Client (`todo_flask_client/`)
 
 ```sh
-# Python virtualenv and pipenv
-sudo apt install python3-pip python3-venv
+# Install the system Protobuf compiler, Python 3 pip, and Python 3 venv support.
+sudo apt install protobuf-compiler python3-pip python3-venv
 
-# Setup virtual environment and dependencies
+# Create and activate a Python virtual environment, then install and synchronize all Python dependencies.
 pipenv install
 pipenv shell
 pipenv sync
 
-# Generate Python gRPC stubs
+# Generate the Python gRPC stubs from your .proto files using the provided script.
 ./generate_grpc_stubs.sh
 
-# Start Flask app
+# Start the Flask application.
 flask run
 ```
 
 ### Vue Client (`todo-vue-client/`)
 
 ```sh
-# Install NVM for proper Node version handling
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-source ~/.bashrc
+# Install NVM (Node Version Manager) - see official guide:
+# https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating
 
-# Install Node.js and Yarn
+# Install the recommended Node.js version and Yarn globally.
 nvm install 22.17.0
 npm install -g yarn
 
-# If you are developing the Vue client, install Caddy for reverse proxy/same-origin dev
+# To enable reverse proxying during development, install Caddy and start it with `./Caddyfile`.
 sudo apt install caddy
 caddy run --config Caddyfile
 
+# Install the project's dependencies.
 cd todo-vue-client
 yarn install
 
-# Generate gRPC-Web stubs (required before dev/build)
+# Generate the gRPC-Web stubs; this step is required before starting development or creating a build.
 yarn generate:grpc-stubs
 
-# Start dev server or build for production
+# Start the development server or build the application for production.
+# Starts the development server.
 yarn dev
+# Builds the app for production.
 yarn build
 ```

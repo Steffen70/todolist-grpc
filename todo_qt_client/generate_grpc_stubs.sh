@@ -33,6 +33,10 @@ else
     mkdir -p "$OUTDIR"
 fi
 
+BIN_NAME="$(basename "$DIR")"
+OUTDIR="$OUTDIR/$BIN_NAME"
+mkdir -p "$OUTDIR"
+
 # Generate C++ gRPC stubs
 protoc -I "$DIR/../protos" \
     --cpp_out="$OUTDIR" \
