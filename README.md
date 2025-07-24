@@ -80,20 +80,18 @@ dotnet run
 ### C++ Client (`todo_qt_client/`)
 
 ```sh
-# Install all necessary C++ build tools, CMake, Python, Jinja2, and the system Protobuf compiler.
-sudo apt install build-essential cmake python3-pip python3-jinja2 protobuf-compiler
+# Install all necessary C++ build tools, CMake, Python, Jinja2, pipx for isolated Python CLI tool management, and the system Protobuf compiler.
+sudo apt install build-essential cmake python3-pip python3-jinja2  pipx protobuf-compiler
+pipx ensurepath
 
 # Confirm the installed protoc version matches the Protobuf version used by your Conan gRPC package.
 # See https://conan.io/center/recipes/grpc?version=1.54.3 for version compatibility details.
 protoc --version
 
-# Install pipx for isolated Python CLI tool management and ensure the pipx path is active.
-pip3 install --user pipx
-pipx ensurepath
-
 # Use pipx to install Conan for clean and reproducible C++ dependency management.
 pipx install conan
 
+conan profile detect
 # Check that your Conan profile (typically at ~/.conan2/profiles/default) sets compiler=gcc (or clang), compiler.cppstd=gnu20, and a compiler version matching your system toolchain.
 
 # Install all required C++ dependencies for both debug and release configurations, or specify the profile such as build-debug.
