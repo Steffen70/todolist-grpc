@@ -16,18 +16,18 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 file(GLOB_RECURSE SRC_FILES
-        CONFIGURE_DEPENDS
-        src/*.cpp
-        generated/**/*.pb.cc
+    CONFIGURE_DEPENDS
+    src/*.cpp
+    generated/**/*.pb.cc
 )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES})
 
 target_include_directories(${PROJECT_NAME}
-        PUBLIC
-        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/generated>
-        $<INSTALL_INTERFACE:include>
+    PUBLIC
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/generated>
+    $<INSTALL_INTERFACE:include>
 )
 
 find_package(gRPC REQUIRED CONFIG)
@@ -37,7 +37,7 @@ find_package(Qt6 COMPONENTS Widgets REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE gRPC::grpc++ fmt::fmt)
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${CMAKE_SOURCE_DIR}/../cert/root_ca.crt"
-        $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    "${CMAKE_SOURCE_DIR}/../cert/root_ca.crt"
+    $<TARGET_FILE_DIR:${PROJECT_NAME}>
 )

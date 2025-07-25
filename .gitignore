@@ -1,9 +1,10 @@
 # IDE files
-.vs/
-.github/
+.cache/
 .idea/
+.vs/
 launchSettings.json
 *.user
+.github/
 
 # Build output
 obj/
