@@ -32,9 +32,14 @@ target_include_directories(${PROJECT_NAME}
 
 find_package(gRPC REQUIRED CONFIG)
 find_package(fmt REQUIRED CONFIG)
-find_package(Qt6 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE gRPC::grpc++ fmt::fmt)
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+    Qt5::Widgets
+    gRPC::grpc++
+    fmt::fmt
+)
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
