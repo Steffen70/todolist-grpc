@@ -28,7 +28,7 @@ openssl pkcs12 -export \
   -inkey localhost.key \
   -in localhost.crt \
   -certfile root_ca.crt \
-  -passout pass:
+  -passout pass:1234
 
 echo ""
 echo "Done. localhost.crt, localhost.key, and localhost.pfx were recreated and signed using root_ca.key."

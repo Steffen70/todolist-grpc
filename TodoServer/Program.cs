@@ -13,7 +13,7 @@ builder.WebHost.ConfigureKestrel(options => options.ListenLocalhost(8445, listen
     var logger = listenOptions.ApplicationServices.GetRequiredService<ILogger<Program>>();
     logger.LogInformation($"Using certificate from {pfxFile}");
 
-    listenOptions.UseHttps(new X509Certificate2(pfxFile, ""));
+    listenOptions.UseHttps(new X509Certificate2(pfxFile, "1234"));
     // Enable HTTP/2 and HTTP/1.1 for gRPC-Web compatibility
     listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
 }));
