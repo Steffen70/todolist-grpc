@@ -2,7 +2,7 @@
 
 ## About This Fork
 
-This repository is a streamlined fork of a student proof-of-concept originally created during a gRPC and ASP.NET learning exercise. The codebase has been cleaned up and kept intentionally small so that it can serve as a **neutral, well-defined backend** for technical interviews at Swisspension.
+This repository is a streamlined fork of a student proof-of-concept originally created during a gRPC and ASP.NET learning exercise. The codebase has been cleaned up and kept intentionally small so that it can serve as a **neutral, well-defined backend** for technical interviews at SwissPension.
 
 ### Why We Use It
 
@@ -42,7 +42,7 @@ Every interviewee works on a dedicated branch named `candidate/<your-name>` that
 
 -   **Commit Messages:** Write each commit message as an English sentence in the past tense (single sentence).
 -   **Comments and Variable Naming:** Use English for all code comments and variable names.
--   **Framework and Language Naming Conventions:** Follow the official naming conventions and best practices for the programming language(s) and framework(s) you use in your frontend implementation. This helps maintain readability, consistency, and professionalism in the codebase.
+-   **Framework and Language Naming Conventions:** Follow the official naming conventions and best practices for the programming language and framework you use in your frontend implementation. This helps maintain readability, consistency, and professionalism in the codebase.
 
 ### What We Evaluate
 
@@ -81,7 +81,7 @@ dotnet run
 
 ```sh
 # Install all necessary C++ build tools, CMake, Python, Jinja2, pipx for isolated Python CLI tool management, and the system Protobuf compiler.
-sudo apt install build-essential cmake python3-pip python3-jinja2  pipx protobuf-compiler
+sudo apt install build-essential cmake python3-pip python3-jinja2 pipx protobuf-compiler
 pipx ensurepath
 
 # Confirm the installed protoc version matches the Protobuf version used by your Conan gRPC package.
